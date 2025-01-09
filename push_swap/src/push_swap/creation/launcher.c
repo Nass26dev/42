@@ -6,7 +6,7 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 15:20:01 by nass              #+#    #+#             */
-/*   Updated: 2025/01/07 10:02:16 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/01/09 09:12:23 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	main_function(t_stack *a, t_stack *b, t_stack *cpy, int size)
 	free_all(a, b, cpy, size);
 }
 
-void	create_three_stacks(t_stack *a, t_stack *b, t_stack *cpy,
+void	create_three_stacks(t_stack **a, t_stack **b, t_stack **cpy,
 		char **splitted)
 {
 	int	size;
@@ -34,15 +34,15 @@ void	create_three_stacks(t_stack *a, t_stack *b, t_stack *cpy,
 	size = 0;
 	while (splitted[size])
 		size++;
-	a = create_stack_one_arg(size, splitted);
-	if (!a)
+	*a = create_stack_one_arg(size, splitted);
+	if (!*a)
 		case_a_one_arg(splitted, size);
-	b = init_b_one_arg(size);
-	if (!b)
-		case_b_one_arg(a, splitted, size);
-	cpy = create_stack_one_arg(size, splitted);
-	if (!cpy)
-		case_cpy_one_arg(a, b, splitted, size);
+	*b = init_b_one_arg(size);
+	if (!*b)
+		case_b_one_arg(*a, splitted, size);
+	*cpy = create_stack_one_arg(size, splitted);
+	if (!*cpy)
+		case_cpy_one_arg(*a, *b, splitted, size);
 }
 
 void	one_arg(char **argv)
@@ -64,7 +64,7 @@ void	one_arg(char **argv)
 	size = 0;
 	while (splitted[size])
 		size++;
-	create_three_stacks(a, b, cpy, splitted);
+	create_three_stacks(&a, &b, &cpy, splitted);
 	if (!is_duplicates(a))
 	{
 		free_split(splitted, size);
