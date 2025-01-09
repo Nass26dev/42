@@ -6,7 +6,7 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 15:48:40 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/01/09 09:08:19 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/01/09 11:54:45 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ t_stack	*create_stack_one_arg(int argc, char **argv)
 		return (free(a), NULL);
 	a->top = -1;
 	temp = argc - 1;
-	while (temp >= 1)
+	while (temp >= 0)
 	{
 		if (!add_to_stack(a, ft_atol(argv[temp--])))
 		{
