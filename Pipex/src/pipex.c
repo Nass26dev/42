@@ -6,7 +6,7 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 17:47:26 by nass              #+#    #+#             */
-/*   Updated: 2025/01/07 12:35:21 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/01/10 17:26:57 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,81 +25,77 @@ void	execute(char *cmd, char **env)
 	free(path);
 }
 
-void	last_child(t_args args, int *pipefd, char **env)
+void	pipex(int rd, int wr, t_args args, char **env)
 {
-	int	fd;
-
-	if (args.is_hd == 1)
-		fd = open_file(args.outfile, 2);
-	else
-		fd = open_file(args.outfile, 1);
-	dup2(fd, STDOUT_FILENO);
-	dup2(pipefd[0], STDIN_FILENO);
-	close_pipe(pipefd[1], pipefd[0]);
-	execute(args.cmd[args.i], env);
-	exit(EXIT_FAILURE);
-}
-
-void	child(t_args args, int *pipefd, char **env)
-{
-	int	fd;
-
-	fd = open_file(args.infile, 0);
-	dup2(fd, STDIN_FILENO);
-	dup2(pipefd[1], STDOUT_FILENO);
-	close_pipe(pipefd[0], pipefd[1]);
-	close(fd);
-	execute(args.cmd[args.i], env);
-	exit(EXIT_FAILURE);
-}
-
-void	pipeline(t_args *args, int *main_pipefd, char **env)
-{
-	int		new_pipefd[2];
 	pid_t	pid;
 
-	while (args->cmd[args->i + 1] != 0)
+	pid = fork();
+	if (pid == CHILD_PID)
 	{
-		pipe(new_pipefd);
-		pid = fork();
-		if (pid == -1)
-		{
-			perror("Fork failed");
-			exit(EXIT_FAILURE);
-		}
-		if (pid == 0)
-		{
-			dup2(main_pipefd[0], STDIN_FILENO);
-			dup2(new_pipefd[1], STDOUT_FILENO);
-			close_pipe(main_pipefd[0], new_pipefd[1]);
-			child(*args, new_pipefd, env);
-		}
-		waitpid(pid, NULL, 0);
-		close_pipe(new_pipefd[1], main_pipefd[0]);
-		main_pipefd[0] = new_pipefd[0];
-		args->i++;
+		dup2(rd, STDIN_FILENO);
+		dup2(wr, STDOUT_FILENO);
+		close_pipe(rd, wr);
+		execute(args.cmd[args.i], env);
+		exit(EXIT_FAILURE);
+	}
+	check_child_success(pid, rd, wr, args);
+}
+
+void	first_and_last_child(t_utils u, t_args args, char **env)
+{
+	if (u.j == 0)
+	{
+		u.fd = open_file(args.infile, 0);
+		pipex(u.fd, u.pipefd[1], args, env);
+		close(u.fd);
+	}
+	else
+	{
+		if (args.is_hd == 1)
+			u.fd = open_file(args.outfile, 2);
+		else
+			u.fd = open_file(args.outfile, 1);
+		pipex(u.last_rd, u.fd, args, env);
+		close(u.fd);
+	}
+}
+
+void	main_loop(t_utils u, t_args args, char **env)
+{
+	while (args.cmd[args.i] != 0)
+	{
+		if (u.j != u.i)
+			pipe(u.pipefd);
+		if (u.j == 0)
+			first_and_last_child(u, args, env);
+		else if (u.j != u.i - 1)
+			pipex(u.last_rd, u.pipefd[1], args, env);
+		else
+			first_and_last_child(u, args, env);
+		if (u.j != 0)
+			close(u.last_rd);
+		u.last_rd = dup(u.pipefd[0]);
+		close_pipe(u.pipefd[0], u.pipefd[1]);
+		args.i++;
+		u.j++;
 	}
 }
 
 int	main(int argc, char **argv, char **env)
 {
-	int		pipefd[2];
 	t_args	args;
-	t_exit	e;
+	t_utils	u;
 
-	e.status = 0;
-	e.exit_status = 0;
 	if (ft_strncmp(argv[1], "here_doc", ft_strlen("here_doc")) == 0)
 		args = case_here_doc(argc, argv);
 	else
 		args = get_args(argc, argv);
 	check_args(args, env);
-	if (pipe(pipefd) == -1)
-	{
-		perror("pipe error");
-		exit(EXIT_FAILURE);
-	}
-	main_part(args, pipefd, env, e);
+	u.i = 0;
+	u.j = 0;
+	while (args.cmd[u.i])
+		u.i++;
+	main_loop(u, args, env);
 	if (args.is_hd == 1)
 		unlink("here_doc");
 	free_args(args);

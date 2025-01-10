@@ -6,7 +6,7 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 16:28:39 by nass              #+#    #+#             */
-/*   Updated: 2025/01/07 12:36:19 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/01/10 17:27:11 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,15 @@ typedef struct s_args
 	char	*outfile;
 }			t_args;
 
+typedef struct s_utils
+{
+	int		j;
+	int		fd;
+	int		pipefd[2];
+	int		last_rd;
+	int		i;
+}			t_utils;
+
 int			open_file(char *name, int boolean);
 char		*find_path(char *cmd, char **env);
 void		free_splitted(char **splitted);
@@ -64,13 +73,12 @@ void		free_args(t_args args);
 void		restore_std(t_error e);
 void		is_unfounded(t_error e, t_args args);
 void		test_flags(t_error e, t_args args, char **env);
-void		check_child_success(pid_t pid, int *pipefd, t_exit e, t_args args);
+void		check_child_success(pid_t pid, int rd, int wr, t_args args);
 t_args		case_here_doc(int argc, char **argv);
-void		pipeline(t_args *args, int *main_pipefd, char **env);
-void		last_child(t_args args, int *pipefd, char **env);
+void		pipeline(t_args *args, int last_pipe, int new_pipe, char **env);
 void		execute(char *cmd, char **env);
 void		close_pipe(int pipe1, int pipe2);
-void		main_part(t_args args, int *pipefd, char **env, t_exit e);
-void		child(t_args args, int *pipefd, char **env);
+void		pipex(int rd, int wr, t_args args, char **env);
+void		dup_std(t_error e);
 
 #endif

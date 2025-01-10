@@ -6,7 +6,7 @@
 #    By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/23 17:17:21 by nass              #+#    #+#              #
-#    Updated: 2025/01/07 12:15:10 by nyousfi          ###   ########.fr        #
+#    Updated: 2025/01/10 17:30:32 by nyousfi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,8 +18,6 @@ SRCS = src/pipex.c \
 		src/utils.c \
 		src/utils2.c \
 		src/error.c \
-		src/std.c \
-		src/error_utils.c \
 		src/here_doc.c
 			
 OBJS = $(SRCS:.c=.o)
@@ -43,7 +41,8 @@ files: $(INFILE) $(OUTFILE)
 
 $(INFILE):
 	touch $(INFILE)
-
+	echo "salut\nca\nva\ntoi\ntoi\ntoi" > $(INFILE)
+	
 $(OUTFILE):
 	touch $(OUTFILE)
 
