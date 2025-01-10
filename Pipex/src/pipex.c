@@ -6,7 +6,7 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 17:47:26 by nass              #+#    #+#             */
-/*   Updated: 2025/01/10 17:26:57 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/01/10 17:44:03 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	pipex(int rd, int wr, t_args args, char **env)
 	{
 		dup2(rd, STDIN_FILENO);
 		dup2(wr, STDOUT_FILENO);
-		close_pipe(rd, wr);
+		close_pipes(rd, wr);
 		execute(args.cmd[args.i], env);
 		exit(EXIT_FAILURE);
 	}
@@ -75,7 +75,7 @@ void	main_loop(t_utils u, t_args args, char **env)
 		if (u.j != 0)
 			close(u.last_rd);
 		u.last_rd = dup(u.pipefd[0]);
-		close_pipe(u.pipefd[0], u.pipefd[1]);
+		close_pipes(u.pipefd[0], u.pipefd[1]);
 		args.i++;
 		u.j++;
 	}
@@ -86,6 +86,11 @@ int	main(int argc, char **argv, char **env)
 	t_args	args;
 	t_utils	u;
 
+	if (argc < 5)
+	{
+		write(2, "expected minimum format : infile cmd1 cmd2 outfile\n", 51);
+		exit(EXIT_FAILURE);
+	}
 	if (ft_strncmp(argv[1], "here_doc", ft_strlen("here_doc")) == 0)
 		args = case_here_doc(argc, argv);
 	else
