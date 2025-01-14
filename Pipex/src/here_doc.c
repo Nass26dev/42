@@ -6,18 +6,46 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/31 10:24:04 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/01/07 10:40:53 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/01/14 17:57:51 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/pipex.h"
 
-void	create_hd(char **argv)
+char	*create_file(void)
+{
+	int		fd;
+	char 	*filename;
+	int		i;
+
+	i = 1;
+	while (i <= MAX_TRIES)
+	{
+		if (i == 1)
+			filename = ft_strdup(BASE_FILENAME);
+		else
+			filename = ft_strjoin(BASE_FILENAME, ft_itoa(i));
+		fd = open(filename, O_CREAT | O_EXCL, 0777);
+		if (fd != -1)
+		{
+			close(fd);
+			return (filename);
+		}
+		i++;
+		free(filename);
+	}
+	write(STDERR_FILENO, "impossible to create tmp file", 29);
+	exit(EXIT_FAILURE);
+}
+
+char	*create_hd(char **argv)
 {
 	int		fd;
 	char	*str;
+	char	*filename;
 
-	fd = open("here_doc", O_WRONLY | O_CREAT, 0777);
+	filename = create_file();
+	fd = open(filename, O_WRONLY, 0777);
 	if (fd == -1)
 	{
 		perror("open temp file error");
@@ -35,12 +63,14 @@ void	create_hd(char **argv)
 	}
 	free(str);
 	close(fd);
+	return (filename);
 }
 
 t_args	case_here_doc(int argc, char **argv)
 {
 	int		i;
 	int		j;
+	char	*filename;
 	t_args	args;
 
 	args.is_hd = 1;
@@ -50,8 +80,9 @@ t_args	case_here_doc(int argc, char **argv)
 	while (i < argc - 1)
 		args.cmd[j++] = ft_strdup(argv[i++]);
 	args.cmd[j] = NULL;
-	create_hd(argv);
-	args.infile = ft_strdup("here_doc");
+	filename = create_hd(argv);
+	args.infile = ft_strdup(filename);
+	free(filename);
 	args.outfile = ft_strdup(argv[argc - 1]);
 	args.i = 0;
 	return (args);

@@ -6,7 +6,7 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 16:28:39 by nass              #+#    #+#             */
-/*   Updated: 2025/01/14 15:59:25 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/01/14 17:50:17 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,18 @@
 # include <stdlib.h>
 # include <sys/wait.h>
 # include <unistd.h>
+# include <limits.h>
 
 # ifndef CHILD_PID
 #  define CHILD_PID 0
+# endif
+
+# ifndef BASE_FILENAME
+#  define BASE_FILENAME "here_doc"
+# endif
+
+# ifndef MAX_TRIES
+#  define MAX_TRIES INT_MAX
 # endif
 
 typedef struct s_error

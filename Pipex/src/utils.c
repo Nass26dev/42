@@ -6,7 +6,7 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/25 02:01:35 by nass              #+#    #+#             */
-/*   Updated: 2025/01/07 10:40:42 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/01/14 17:55:05 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	open_file(char *name, int boolean)
 	else if (boolean == 1)
 		fd = open(name, O_WRONLY | O_CREAT | O_TRUNC, 0777);
 	else if (boolean == 2)
-		fd = open(name, O_WRONLY | O_CREAT | O_APPEND);
+		fd = open(name, O_WRONLY | O_CREAT | O_APPEND, 0777);
 	if (fd == -1)
 	{
 		perror("open error");

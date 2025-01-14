@@ -6,7 +6,7 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 17:47:26 by nass              #+#    #+#             */
-/*   Updated: 2025/01/14 16:01:49 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/01/14 17:46:39 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ int	main(int argc, char **argv, char **env)
 		u.i++;
 	main_loop(u, args, env);
 	if (args.is_hd == 1)
-		unlink("here_doc");
+		unlink(args.infile);
 	free_args(args);
 	return (0);
 }
