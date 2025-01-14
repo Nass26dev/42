@@ -6,13 +6,13 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 12:14:55 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/01/10 17:29:54 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/01/14 15:59:41 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/pipex.h"
 
-void	close_pipe(int pipe1, int pipe2)
+void	close_pipes(int pipe1, int pipe2)
 {
 	close(pipe1);
 	close(pipe2);
@@ -22,7 +22,7 @@ void	restore_std(t_error e)
 {
 	dup2(e.saved_stdin, STDIN_FILENO);
 	dup2(e.saved_stdout, STDOUT_FILENO);
-	close_pipe(e.saved_stdin, e.saved_stdout);
+	close_pipes(e.saved_stdin, e.saved_stdout);
 }
 
 void	dup_std(t_error e)

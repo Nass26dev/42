@@ -6,7 +6,7 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 09:40:15 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/01/10 17:30:15 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/01/14 15:59:56 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	check_child_success(pid_t pid, int rd, int wr, t_args args)
 		if (ex.exit_status != EXIT_SUCCESS)
 		{
 			free_args(args);
-			close_pipe(rd, wr);
+			close_pipes(rd, wr);
 			exit(EXIT_FAILURE);
 		}
 	}
@@ -97,7 +97,7 @@ void	check_args(t_args args, char **env)
 	if (e.fd == -1)
 	{
 		perror("open error for infile");
-		close_pipe(e.pipefd[1], e.pipefd[0]);
+		close_pipes(e.pipefd[1], e.pipefd[0]);
 		free_args(args);
 		exit(EXIT_FAILURE);
 	}

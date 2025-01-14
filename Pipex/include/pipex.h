@@ -6,7 +6,7 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 16:28:39 by nass              #+#    #+#             */
-/*   Updated: 2025/01/10 17:27:11 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/01/14 15:59:25 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,9 +75,8 @@ void		is_unfounded(t_error e, t_args args);
 void		test_flags(t_error e, t_args args, char **env);
 void		check_child_success(pid_t pid, int rd, int wr, t_args args);
 t_args		case_here_doc(int argc, char **argv);
-void		pipeline(t_args *args, int last_pipe, int new_pipe, char **env);
 void		execute(char *cmd, char **env);
-void		close_pipe(int pipe1, int pipe2);
+void		close_pipes(int pipe1, int pipe2);
 void		pipex(int rd, int wr, t_args args, char **env);
 void		dup_std(t_error e);
 
