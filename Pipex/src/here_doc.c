@@ -6,7 +6,7 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/31 10:24:04 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/01/14 17:57:51 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/01/14 18:01:25 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 char	*create_file(void)
 {
 	int		fd;
-	char 	*filename;
+	char	*filename;
 	int		i;
 
 	i = 1;

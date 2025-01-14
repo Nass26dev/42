@@ -6,7 +6,7 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 17:47:26 by nass              #+#    #+#             */
-/*   Updated: 2025/01/14 17:46:39 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/01/14 18:02:02 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,8 +91,8 @@ int	main(int argc, char **argv, char **env)
 		write(2, "expected minimum format : infile cmd1 cmd2 outfile\n", 51);
 		exit(EXIT_FAILURE);
 	}
-	if (ft_strncmp(argv[1], "here_doc", ft_strlen("here_doc")) == 0 && 
-		ft_strlen(argv[1]) == ft_strlen("here_doc"))
+	if (ft_strncmp(argv[1], "here_doc", ft_strlen("here_doc")) == 0
+		&& ft_strlen(argv[1]) == ft_strlen("here_doc"))
 		args = case_here_doc(argc, argv);
 	else
 		args = get_args(argc, argv);
