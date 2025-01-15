@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   driver.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 10:59:53 by nyousfi           #+#    #+#             */
-/*   Updated: 2024/12/22 03:30:01 by nass             ###   ########.fr       */
+/*   Updated: 2025/01/15 16:48:55 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ void	checker(t_stack *a, t_stack *b)
 		if (!move(a, b, str))
 		{
 			write(2, "Error\n", 6);
+			free(str);
 			return ;
 		}
 		free(str);
