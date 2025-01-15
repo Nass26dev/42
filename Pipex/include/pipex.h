@@ -6,7 +6,7 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 16:28:39 by nass              #+#    #+#             */
-/*   Updated: 2025/01/14 17:50:17 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/01/15 17:05:28 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void		free_splitted(char **splitted);
 t_args		get_args(int argc, char **argv);
 void		check_args(t_args args, char **env);
 void		free_args(t_args args);
-void		restore_std(t_error e);
+void		restore_std(int s_stdin, int s_stdout);
 void		is_unfounded(t_error e, t_args args);
 void		test_flags(t_error e, t_args args, char **env);
 void		check_child_success(pid_t pid, int rd, int wr, t_args args);

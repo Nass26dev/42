@@ -6,7 +6,7 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 12:14:55 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/01/14 15:59:41 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/01/15 17:07:41 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@ void	close_pipes(int pipe1, int pipe2)
 	close(pipe2);
 }
 
-void	restore_std(t_error e)
+void	restore_std(int s_stdin, int s_stdout)
 {
-	dup2(e.saved_stdin, STDIN_FILENO);
-	dup2(e.saved_stdout, STDOUT_FILENO);
-	close_pipes(e.saved_stdin, e.saved_stdout);
+	dup2(s_stdin, STDIN_FILENO);
+	dup2(s_stdout, STDOUT_FILENO);
+	close_pipes(s_stdin, s_stdout);
 }
 
 void	dup_std(t_error e)
