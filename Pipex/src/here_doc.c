@@ -6,11 +6,24 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/31 10:24:04 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/01/14 18:01:25 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/01/16 13:59:08 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/pipex.h"
+
+char	*add_num(int i)
+{
+	char	*temp;
+	char	*filename;
+
+	temp = ft_itoa(i);
+	if (!temp)
+		return (NULL);
+	filename = ft_strjoin(BASE_FILENAME, temp);
+	free(temp);
+	return (filename);
+}
 
 char	*create_file(void)
 {
@@ -24,7 +37,9 @@ char	*create_file(void)
 		if (i == 1)
 			filename = ft_strdup(BASE_FILENAME);
 		else
-			filename = ft_strjoin(BASE_FILENAME, ft_itoa(i));
+			filename = add_num(i);
+		if (!filename)
+			return (NULL);
 		fd = open(filename, O_CREAT | O_EXCL, 0777);
 		if (fd != -1)
 		{
@@ -81,6 +96,11 @@ t_args	case_here_doc(int argc, char **argv)
 		args.cmd[j++] = ft_strdup(argv[i++]);
 	args.cmd[j] = NULL;
 	filename = create_hd(argv);
+	if (!filename)
+	{
+		free_args(args);
+		exit(EXIT_FAILURE);
+	}
 	args.infile = ft_strdup(filename);
 	free(filename);
 	args.outfile = ft_strdup(argv[argc - 1]);

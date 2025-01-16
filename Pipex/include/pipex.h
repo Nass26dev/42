@@ -6,7 +6,7 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 16:28:39 by nass              #+#    #+#             */
-/*   Updated: 2025/01/15 17:05:28 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/01/16 13:44:22 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,5 +88,6 @@ void		execute(char *cmd, char **env);
 void		close_pipes(int pipe1, int pipe2);
 void		pipex(int rd, int wr, t_args args, char **env);
 void		dup_std(t_error e);
+t_error		init_e(void);
 
 #endif

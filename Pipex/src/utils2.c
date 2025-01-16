@@ -6,7 +6,7 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 12:14:55 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/01/15 17:07:41 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/01/16 14:01:02 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,4 +44,14 @@ void	free_args(t_args args)
 	free(args.cmd);
 	free(args.infile);
 	free(args.outfile);
+}
+
+t_error	init_e(void)
+{
+	t_error	e;
+
+	e.saved_stdin = 0;
+	e.saved_stdout = 0;
+	e.i = -1;
+	return (e);
 }
