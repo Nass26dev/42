@@ -3,24 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 17:11:10 by nyousfi           #+#    #+#             */
-/*   Updated: 2024/12/24 03:42:05 by nass             ###   ########.fr       */
+/*   Updated: 2025/01/17 17:40:23 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/ft_printf.h"
-
-ssize_t ft_strlen(char *str)
-{
-	ssize_t i;
-
-	i = 0;
-	while (str[i])
-		i++;
-	return (i);
-}
 
 int	char_is_flag(char c)
 {
