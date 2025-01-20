@@ -6,7 +6,7 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 09:40:15 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/01/16 13:44:35 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/01/20 17:35:50 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,9 @@ void	test_flags(t_error e, t_args args, char **env)
 		close(e.fd);
 		free_splitted(e.s_cmd);
 		free(e.temp);
-		free_args(args);
 		if (args.is_hd == 1)
 			unlink(args.infile);
+		free_args(args);
 		exit(EXIT_FAILURE);
 	}
 	else
