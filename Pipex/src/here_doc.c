@@ -6,11 +6,24 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/31 10:24:04 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/01/24 13:35:20 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/01/24 14:40:18 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/pipex.h"
+
+char	*recup_filename(t_args args)
+{
+	char	*filename;
+
+	filename = create_file();
+	if (!filename)
+	{
+		free_args(args);
+		exit(EXIT_FAILURE);
+	}
+	return (filename);
+}
 
 char	*add_num(int i)
 {

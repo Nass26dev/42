@@ -6,7 +6,7 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 16:28:39 by nass              #+#    #+#             */
-/*   Updated: 2025/01/24 12:44:15 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/01/24 14:38:46 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,5 +89,5 @@ char		*recup_filename(t_args args);
 char		*create_file(void);
 void		allocate_cmd(int i, int argc, char **argv, t_args args);
 void		init_args(t_args *args);
-
+void		main_loop(t_utils u, t_args args, char **env);
 #endif

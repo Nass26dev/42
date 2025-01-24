@@ -6,7 +6,7 @@
 #    By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/23 17:17:21 by nass              #+#    #+#              #
-#    Updated: 2025/01/24 14:35:22 by nyousfi          ###   ########.fr        #
+#    Updated: 2025/01/24 14:40:27 by nyousfi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,9 +16,10 @@ CC = cc
 CFLAGS = -Wall -Werror -Wextra -MMD -MP
 SRCS = src/pipex.c \
 		src/pipex_utils.c \
-		src/secure.c \
+		src/security.c \
 		src/here_doc.c \
-		src/creation_utils.c
+		src/args.c \
+		src/main.c
 
 MAKEDIR = make
 OBJDIR = make/objs

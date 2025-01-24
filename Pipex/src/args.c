@@ -1,29 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   creation_utils.c                                   :+:      :+:    :+:   */
+/*   args.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 12:15:17 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/01/24 13:34:22 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/01/24 14:41:58 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/pipex.h"
-
-char	*recup_filename(t_args args)
-{
-	char	*filename;
-
-	filename = create_file();
-	if (!filename)
-	{
-		free_args(args);
-		exit(EXIT_FAILURE);
-	}
-	return (filename);
-}
 
 void	allocate_cmd(int i, int argc, char **argv, t_args args)
 {
