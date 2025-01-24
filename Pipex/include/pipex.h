@@ -6,7 +6,7 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 16:28:39 by nass              #+#    #+#             */
-/*   Updated: 2025/01/24 11:41:39 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/01/24 12:44:15 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,10 @@ void		execute(char *cmd, char **env);
 void		close_pipes(int pipe1, int pipe2);
 void		pipex(int rd, int wr, t_args args, char **env);
 char		*check_access(char *cmd_path, char **s_path);
-void		init_in_out(t_args *args, char **argv, int argc);
+void		init_in_out(t_args *args, char *infile, char **argv, int argc);
+char		*recup_filename(t_args args);
+char		*create_file(void);
+void		allocate_cmd(int i, int argc, char **argv, t_args args);
+void		init_args(t_args *args);
 
 #endif

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils2.c                                           :+:      :+:    :+:   */
+/*   secure.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 12:14:55 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/01/21 16:58:51 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/01/24 12:32:02 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,13 +69,12 @@ char	*check_access(char *cmd_path, char **s_path)
 	return (NULL);
 }
 
-void	init_in_out(t_args *args, char **argv, int argc)
+void	free_splitted(char **splitted)
 {
-	args->infile = ft_strdup(argv[1]);
-	args->outfile = ft_strdup(argv[argc - 1]);
-	if (!args->infile || !args->outfile)
-	{
-		free_args(*args);
-		exit(EXIT_FAILURE);
-	}
+	int	i;
+
+	i = 0;
+	while (splitted[i])
+		i++;
+	free_split(splitted, i);
 }

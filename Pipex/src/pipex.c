@@ -6,7 +6,7 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 17:47:26 by nass              #+#    #+#             */
-/*   Updated: 2025/01/24 11:41:06 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/01/24 12:57:08 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,12 @@ void	pipex(int rd, int wr, t_args args, char **env)
 	}
 	if (pid == CHILD_PID)
 	{
-		dup2(rd, STDIN_FILENO);
-		dup2(wr, STDOUT_FILENO);
+		if (dup2(rd, STDIN_FILENO) == -1
+			|| dup2(wr, STDOUT_FILENO) == -1)
+		{
+			free_args(args);
+			exit(EXIT_FAILURE);
+		}
 		close_pipes(rd, wr);
 		execute(args.cmd[args.i], env);
 		free_args(args);
@@ -90,7 +94,15 @@ void	main_loop(t_utils u, t_args args, char **env)
 	while (args.cmd[args.i] != 0)
 	{
 		if (u.j != u.i)
-			pipe(u.pipefd);
+		{
+			if (pipe(u.pipefd) == -1)
+			{
+				close(u.last_rd);
+				free_args(args);
+				perror("pipe error");
+				exit (EXIT_FAILURE);
+			}
+		}
 		if (u.j == 0)
 			first_and_last_child(u, args, env);
 		else if (u.j != u.i - 1)

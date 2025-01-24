@@ -6,7 +6,7 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/31 10:24:04 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/01/24 11:17:23 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/01/24 13:35:20 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,60 +53,53 @@ char	*create_file(void)
 	exit(EXIT_FAILURE);
 }
 
-char	*read_std(char **argv)
+char	*read_std(char **argv, t_args args)
 {
 	int		fd;
 	char	*str;
 	char	*filename;
 
-	filename = create_file();
+	filename = recup_filename(args);
 	fd = open(filename, O_WRONLY, 0777);
 	if (fd == -1)
 	{
+		free(filename);
+		free_args(args);
 		perror("open temp file error");
 		exit(EXIT_FAILURE);
 	}
 	while (1)
 	{
 		str = get_next_line(0);
-		if (!str)
-			exit(EXIT_FAILURE);
-		else if (ft_strncmp(str, argv[2], ft_strlen(argv[2])) == 0
+		if (ft_strncmp(str, argv[2], ft_strlen(argv[2])) == 0
 			&& (ft_strlen(str) - 1) == ft_strlen(argv[2]))
 			break ;
 		write(fd, str, ft_strlen(str));
 		free(str);
 	}
-	free(str);
 	close(fd);
-	return (filename);
+	return (free(str), filename);
 }
 
 t_args	case_here_doc(int argc, char **argv)
 {
-	int		i;
-	int		j;
 	char	*filename;
 	t_args	args;
 
+	init_args(&args);
 	args.is_hd = 1;
 	args.cmd = malloc((argc - 3) * sizeof(char *));
 	if (!args.cmd)
 		exit(EXIT_FAILURE);
-	i = 3;
-	j = 0;
-	while (i < argc - 1)
-		args.cmd[j++] = ft_strdup(argv[i++]);
-	args.cmd[j] = NULL;
-	filename = read_std(argv);
+	allocate_cmd(3, argc, argv, args);
+	filename = read_std(argv, args);
 	if (!filename)
 	{
 		free_args(args);
 		exit(EXIT_FAILURE);
 	}
-	args.infile = ft_strdup(filename);
+	init_in_out(&args, filename, argv, argc);
 	free(filename);
-	args.outfile = ft_strdup(argv[argc - 1]);
 	args.i = 0;
 	return (args);
 }
