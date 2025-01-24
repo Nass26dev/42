@@ -6,7 +6,7 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/25 02:01:35 by nass              #+#    #+#             */
-/*   Updated: 2025/01/14 17:55:05 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/01/21 16:58:26 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,6 @@ int	open_file(char *name, int boolean)
 		fd = open(name, O_WRONLY | O_CREAT | O_TRUNC, 0777);
 	else if (boolean == 2)
 		fd = open(name, O_WRONLY | O_CREAT | O_APPEND, 0777);
-	if (fd == -1)
-	{
-		perror("open error");
-		exit(EXIT_FAILURE);
-	}
 	return (fd);
 }
 
@@ -70,13 +65,14 @@ char	*find_path(char *cmd, char **env)
 	while (s_path[++i])
 	{
 		temp = ft_strjoin(s_path[i], "/");
+		if (!temp)
+			return (NULL);
 		cmd_path = ft_strjoin(temp, cmd);
+		if (!cmd_path)
+			return (free(temp), NULL);
 		free(temp);
-		if (access(cmd_path, F_OK | X_OK) == 0)
-		{
-			free_splitted(s_path);
+		if (check_access(cmd_path, s_path))
 			return (cmd_path);
-		}
 		free(cmd_path);
 	}
 	free_splitted(s_path);
@@ -91,13 +87,21 @@ t_args	get_args(int argc, char **argv)
 
 	args.is_hd = 0;
 	args.cmd = malloc((argc - 2) * sizeof(char *));
+	if (!args.cmd)
+		exit(EXIT_FAILURE);
 	i = 2;
 	j = 0;
 	while (i < argc - 1)
-		args.cmd[j++] = ft_strdup(argv[i++]);
+	{
+		args.cmd[j] = ft_strdup(argv[i++]);
+		if (!args.cmd[j++])
+		{
+			free_args(args);
+			exit(EXIT_FAILURE);
+		}
+	}
 	args.cmd[j] = NULL;
-	args.infile = ft_strdup(argv[1]);
-	args.outfile = ft_strdup(argv[argc - 1]);
+	init_in_out(&args, argv, argc);
 	args.i = 0;
 	return (args);
 }

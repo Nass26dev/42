@@ -6,7 +6,7 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 16:28:39 by nass              #+#    #+#             */
-/*   Updated: 2025/01/16 13:44:22 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/01/24 11:41:39 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,17 +77,13 @@ int			open_file(char *name, int boolean);
 char		*find_path(char *cmd, char **env);
 void		free_splitted(char **splitted);
 t_args		get_args(int argc, char **argv);
-void		check_args(t_args args, char **env);
 void		free_args(t_args args);
-void		restore_std(int s_stdin, int s_stdout);
-void		is_unfounded(t_error e, t_args args);
-void		test_flags(t_error e, t_args args, char **env);
 void		check_child_success(pid_t pid, int rd, int wr, t_args args);
 t_args		case_here_doc(int argc, char **argv);
 void		execute(char *cmd, char **env);
 void		close_pipes(int pipe1, int pipe2);
 void		pipex(int rd, int wr, t_args args, char **env);
-void		dup_std(t_error e);
-t_error		init_e(void);
+char		*check_access(char *cmd_path, char **s_path);
+void		init_in_out(t_args *args, char **argv, int argc);
 
 #endif

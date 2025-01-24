@@ -6,7 +6,7 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/31 10:24:04 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/01/16 13:59:08 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/01/24 11:17:23 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ char	*create_file(void)
 	exit(EXIT_FAILURE);
 }
 
-char	*create_hd(char **argv)
+char	*read_std(char **argv)
 {
 	int		fd;
 	char	*str;
@@ -71,7 +71,8 @@ char	*create_hd(char **argv)
 		str = get_next_line(0);
 		if (!str)
 			exit(EXIT_FAILURE);
-		else if (ft_strncmp(str, argv[2], ft_strlen(argv[2])) == 0)
+		else if (ft_strncmp(str, argv[2], ft_strlen(argv[2])) == 0
+			&& (ft_strlen(str) - 1) == ft_strlen(argv[2]))
 			break ;
 		write(fd, str, ft_strlen(str));
 		free(str);
@@ -90,12 +91,14 @@ t_args	case_here_doc(int argc, char **argv)
 
 	args.is_hd = 1;
 	args.cmd = malloc((argc - 3) * sizeof(char *));
+	if (!args.cmd)
+		exit(EXIT_FAILURE);
 	i = 3;
 	j = 0;
 	while (i < argc - 1)
 		args.cmd[j++] = ft_strdup(argv[i++]);
 	args.cmd[j] = NULL;
-	filename = create_hd(argv);
+	filename = read_std(argv);
 	if (!filename)
 	{
 		free_args(args);

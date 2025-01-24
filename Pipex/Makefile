@@ -6,28 +6,31 @@
 #    By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/23 17:17:21 by nass              #+#    #+#              #
-#    Updated: 2025/01/10 17:30:32 by nyousfi          ###   ########.fr        #
+#    Updated: 2025/01/24 11:40:43 by nyousfi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = pipex
 
 CC = cc
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra -MMD -MP
 SRCS = src/pipex.c \
 		src/utils.c \
 		src/utils2.c \
-		src/error.c \
 		src/here_doc.c
-			
-OBJS = $(SRCS:.c=.o)
+
+MAKEDIR = make
+OBJDIR = make/objs
+DEPDIR = make/deps
+
+OBJS = $(SRCS:src/%.c=$(OBJDIR)/%.o)
+DEPS = $(SRCS:src/%.c=$(DEPDIR)/%.d)
 
 HEADER = include/pipex.h
-
+LIBFT_HEADER = include/libft/libft.h \
+					include/libft/ft_printf.h \
+					include/libft/get_next_line.h
 LIBFT = include/libft
-LIBFT_HEADER = include/libft/ft_printf.h \
-			include/libft/get_next_line.h \
-			include/libft/libft.h
 
 INFILE = infile
 OUTFILE = outfile
@@ -36,6 +39,13 @@ all: $(NAME)
 
 $(NAME): $(OBJS) $(LIBFT)
 	$(CC) $(CFLAGS) $(OBJS) -L$(LIBFT) -lft -o $(NAME)
+
+$(OBJDIR)/%.o: src/%.c $(HEADER) $(LIBFT_HEADER)
+	@mkdir -p $(OBJDIR) $(DEPDIR)
+	$(CC) $(CFLAGS) -Iinclude -I$(LIBFT) -c $< -o $@
+	@mv -f $(OBJDIR)/$*.d $(DEPDIR)/$*.d
+
+-include $(DEPS)
 
 files: $(INFILE) $(OUTFILE)
 
@@ -46,11 +56,8 @@ $(INFILE):
 $(OUTFILE):
 	touch $(OUTFILE)
 
-%.o: src/pipex/%.c $(HEADER)
-	$(CC) $(CFLAGS) -I$(LIBFT_HEADER) -c $@ -o $<
-
 clean:
-	rm -f $(OBJS)
+	rm -rf $(MAKEDIR)
 
 fclean: clean
 	rm -f $(NAME)
