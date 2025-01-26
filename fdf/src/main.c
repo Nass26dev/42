@@ -6,7 +6,7 @@
 /*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 23:20:50 by nass              #+#    #+#             */
-/*   Updated: 2025/01/25 14:22:28 by nass             ###   ########.fr       */
+/*   Updated: 2025/01/26 21:53:06 by nass             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	main(int argc, char **argv)
 	p.win = mlx_new_window(p.mlx, WIDTH, HEIGHT, TITLE);
 	p.img = mlx_new_image(p.mlx, WIDTH, HEIGHT);
 	p.data = mlx_get_data_addr(p.img, &p.bpp, &p.sl, &p.endian);
-	render(&p);
+	// render(&p);
 	mlx_put_image_to_window(p.mlx, p.win, p.img, 0, 0);
 	mlx_hook(p.win, 17, 0, close_window, (void *)&p);
 	mlx_key_hook(p.win, key_hook, (void *)&p);
