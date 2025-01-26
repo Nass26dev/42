@@ -5,48 +5,73 @@
 #                                                     +:+ +:+         +:+      #
 #    By: nass <nass@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/12/17 17:08:11 by nass              #+#    #+#              #
-#    Updated: 2024/12/19 00:40:34 by nass             ###   ########.fr        #
+#    Created: 2025/01/17 23:28:05 by nass              #+#    #+#              #
+#    Updated: 2025/01/25 14:17:51 by nass             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = fdf
 
 CC = cc
-CFLAGS =  -Wall -Werror -Wextra
-LDFLAGS = -lm -Lminilibx-linux -lmlx -lX11 -lXext
-SRCS = src/fdf.c \
-			src/lst.c \
+CFLAGS = -Wall -Werror -Wextra -MMD -MP
+MLXFLAGS = -lm -Llib/minilibx -lmlx -lX11 -lXext
+LIBFTFLAGS = -Llib/libft -lft
+SRCS = src/main.c \
 			src/parser.c \
-			src/gnl/get_next_line.c \
-			src/gnl/get_next_line_utils.c \
-			src/utils.c \
-			src/ft_split.c \
+			src/free.c \
+			src/projections.c \
 			src/render.c \
-			src/color.c \
-			src/projections.c
+			src/color.c
 
-OBJS = $(SRCS:.c=.o)
+MAKEDIR = make
+OBJDIR = make/objs
+DEPDIR = make/deps
+		
+OBJS = $(SRCS:src/%.c=$(OBJDIR)/%.o)
+DEPS = $(SRCS:src/%.c=$(DEPDIR)/%.d)
 
-HEADER = include/fdf.h \
-			include/get_next_line.h \
-			include/define.h \
-			include/struct.h
+HEADER = include/fdf.h
+LIBFT_HEADER = lib/libft/libft.h
+
+COMPILED = 0
+MESSAGE_COLOR_GREEN = \033[1;32m
+MESSAGE_COLOR_BLUE = \033[1;34m
+MESSAGE_COLOR_YELLOW = \033[1;33m
+MESSAGE_COLOR_RED = \033[1;31m
+MESSAGE_RESET = \033[1;0m
 
 all: $(NAME)
+	@if [ $(COMPILED) -eq 1 ]; then \
+		echo "$(MESSAGE_COLOR_BLUE)compilation done 🎉$(MESSAGE_RESET)"; \
+	else \
+		echo "$(MESSAGE_COLOR_BLUE)everything is already up to date 😉$(MESSAGE_RESET)"; \
+	fi
 
-$(NAME): $(OBJS)
-	$(CC) -o $(NAME) $(OBJS) $(LDFLAGS)
+$(NAME): $(OBJS) $(LIBFT)
+	@$(CC) $(CFLAGS) $(OBJS) $(MLXFLAGS) $(LIBFTFLAGS) -o $(NAME)
+	@$(eval COMPILED := 1)
+	
+$(OBJDIR)%.o: src/%.c $(HEADER) $(LIBFT_HEADER)
+	@echo "$(MESSAGE_COLOR_YELLOW)Compiling $@... 🛠️$(MESSAGE_RESET)"
+	@mkdir -p $(OBJDIR) $(DEPDIR)
+	@$(CC) $(CFLAGS) -Iinclude -Ilib/libft -c $< -o $@
+	@mv -f $(OBJDIR)/$*.d $(DEPDIR)/$*.d
+	@$(eval COMPILED := 1)
+	@echo "$(MESSAGE_COLOR_GREEN)Compilation of $@ done! ✅$(MESSAGE_RESET)"
 
-%.o: src/%.c $(HEADER)
-	$(CC) $(CFLAGS) -c $@ -o $<
+-include $(DEPS)
 
 clean:
-	rm -f $(OBJS)
+	@if [ -d $(MAKEDIR) ] || [ -f $(NAME) ]; then \
+		rm -rf $(MAKEDIR); \
+		echo "$(MESSAGE_COLOR_RED)all files are deleted 🗑️$(MESSAGE_RESET)"; \
+	else \
+		echo "$(MESSAGE_COLOR_GREEN)files already deleted 😉$(MESSAGE_RESET)"; \
+	fi
 
 fclean: clean
-	rm -f $(NAME)
+	@rm -f $(NAME)
 
-re: clean all
+re: fclean all
 
 .PHONY: all clean fclean re

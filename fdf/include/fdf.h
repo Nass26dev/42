@@ -3,38 +3,138 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/05 16:44:48 by nyousfi           #+#    #+#             */
-/*   Updated: 2024/12/29 19:51:18 by nyousfi          ###   ########.fr       */
+/*   Created: 2025/01/17 23:34:06 by nass              #+#    #+#             */
+/*   Updated: 2025/01/25 14:37:39 by nass             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FDF_H
 # define FDF_H
 
-# include "../minilibx-linux/mlx.h"
-# include "define.h"
-# include "struct.h"
+# ifndef WIDTH
+#  define WIDTH 1800
+# endif
+
+# ifndef HEIGHT
+#  define HEIGHT 1200
+# endif
+
+# ifndef TITLE
+#  define TITLE "Fdf"
+# endif
+
+# ifndef COS30
+#  define COS30 0.866
+# endif
+
+# ifndef SIN30
+#  define SIN30 0.5
+# endif
+
+# ifndef COLOR1
+#  define COLOR1 0xFFFFFF
+# endif
+
+# ifndef COLOR2
+#  define COLOR2 0xFF0000
+# endif
+
+typedef struct s_down
+{
+	int				y;
+	int				z;
+	struct s_down	*next;
+}		t_down;
+
+typedef struct s_map
+{
+	int				x;
+	t_down			*down;
+	struct s_map	*next;
+}		t_map;
+
+typedef struct s_param
+{
+	void	*mlx;
+	void	*win;
+	void	*img;
+	char	*data;
+	int		bpp;
+	int		sl;
+	int		endian;
+	int		zoom_factor;
+	int		offset_x;
+	int		offset_y;
+	int		proj;
+	t_map	*lst;
+}		t_param;
+
+typedef struct s_free
+{
+	void	*ptr;
+	t_map	*map;
+	char	**split;
+}		t_free;
+
+typedef struct s_point
+{
+	int	x;
+	int	y;
+}		t_point;
+
+typedef struct s_bresenham
+{
+	int				diff_x;
+	int				diff_y;
+	int				steps;
+	float			x_inc;
+	float			y_inc;
+	float			t;
+	float			x;
+	float			y;
+	int				i;
+	int				color;
+}					t_bresenham;
+
+typedef struct s_rgb
+{
+	int				r;
+	int				g;
+	int				b;
+}					t_rgb;
+
+typedef struct s_render
+{
+	t_point	proj;
+	t_point	next_proj;
+	t_point	first;
+	t_point	second;
+	t_map	*current;
+	t_map	*next;
+	t_down	*current_down;
+	t_down	*next_down;
+	int		color;
+	int		color2;
+}					t_render;
+
+# include "../lib/libft/libft.h"
+# include "../lib/minilibx/mlx.h"
 # include <fcntl.h>
 # include <math.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <stdarg.h>
 
-char		*get_next_line(int fd);
-void		add_node(t_list **lst, int x, t_param *param);
-void		add_nodes_down(t_list **lst, char **splitted, t_param *param);
-void		free_lst(t_list *lst);
-long int	ft_atol(const char *str);
-char		**ft_split(const char *s, char c);
-void		free_split(char **split, int i);
-t_list		*read_file(int fd, t_param *param);
-void		render_3d(t_param *param);
-int			get_color(int z);
+void    	free_function(int nf, int nfl, int nfs, ...);
+void		parse_file(char *filename, t_param *m);
+t_point		iso_proj(int x, int y, int z, t_param *param);
 t_point		choose_proj(int x, int y, int z, t_param *param);
 int			insert_color(int color_start, int color_end, float t);
-t_rgb		hex_to_rgb(int hex);
-int			close_window(int keycode, void *param);
+int			get_color(int z);
+void	    render(t_param *p);
+void	image_pixel_put(char *data, int x, int y, int color, int bpp, int sl);
 
 #endif

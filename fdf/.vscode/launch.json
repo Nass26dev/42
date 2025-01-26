@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": false,
-      "cwd": "/home/nass/Documents/fdf",
-      "program": "/home/nass/Documents/fdf/build/Debug/outDebug",
+      "cwd": "/home/nass/Documents/42/fdf",
+      "program": "/home/nass/Documents/42/fdf/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [

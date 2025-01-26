@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+         #
+#    By: nass <nass@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/23 17:17:21 by nass              #+#    #+#              #
-#    Updated: 2025/01/24 14:40:27 by nyousfi          ###   ########.fr        #
+#    Updated: 2025/01/25 14:18:27 by nass             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -78,7 +78,6 @@ files:
 clean:
 	@if [ -d $(MAKEDIR) ] || [ -f $(NAME) ]; then \
 		rm -rf $(MAKEDIR); \
-		rm -f $(NAME); \
 		echo "$(MESSAGE_COLOR_RED)all files are deleted 🗑️$(MESSAGE_RESET)"; \
 	else \
 		echo "$(MESSAGE_COLOR_GREEN)files already deleted 😉$(MESSAGE_RESET)"; \
