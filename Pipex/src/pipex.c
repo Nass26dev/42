@@ -6,7 +6,7 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 17:47:26 by nass              #+#    #+#             */
-/*   Updated: 2025/01/24 14:37:21 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/01/27 11:19:25 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,8 @@ void	first_and_last_child(t_utils u, t_args args, char **env)
 		u.fd = open_file(args.outfile, 1);
 	if (u.fd == -1)
 	{
+		if (args.is_hd)
+			unlink(args.infile);
 		free_args(args);
 		perror("open error");
 		exit(EXIT_FAILURE);

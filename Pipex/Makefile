@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nass <nass@student.42.fr>                  +#+  +:+       +#+         #
+#    By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/23 17:17:21 by nass              #+#    #+#              #
-#    Updated: 2025/01/25 14:18:27 by nass             ###   ########.fr        #
+#    Updated: 2025/01/27 11:45:40 by nyousfi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -76,7 +76,7 @@ files:
 	fi
 
 clean:
-	@if [ -d $(MAKEDIR) ] || [ -f $(NAME) ]; then \
+	@if [ -d $(MAKEDIR) ]; then \
 		rm -rf $(MAKEDIR); \
 		echo "$(MESSAGE_COLOR_RED)all files are deleted 🗑️$(MESSAGE_RESET)"; \
 	else \
@@ -85,14 +85,15 @@ clean:
 
 
 fclean: clean
-	@rm -f $(NAME)
+	@if [ -f $(NAME) ]; then \
+		rm -f $(NAME); \
+		echo "$(MESSAGE_COLOR_RED)exec was removed 🗑️$(MESSAGE_RESET)"; \
+	fi
 	@if [ -f $(INFILE) ] || [ -f $(OUTFILE) ]; then \
 		rm -f $(INFILE); \
 		rm -f $(OUTFILE); \
 		echo "$(MESSAGE_COLOR_YELLOW)Test files removed successfully 🧹$(MESSAGE_RESET)"; \
 	fi
-	@rm -f $(INFILE)
-	@rm -f $(OUTFILE)
 
 re: fclean all
 
