@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 23:34:06 by nass              #+#    #+#             */
-/*   Updated: 2025/01/25 14:37:39 by nass             ###   ########.fr       */
+/*   Updated: 2025/02/10 09:49:23 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,9 +91,9 @@ typedef struct s_bresenham
 	int				steps;
 	float			x_inc;
 	float			y_inc;
-	float			t;
-	float			x;
-	float			y;
+	int			t;
+	int		x;
+	int		y;
 	int				i;
 	int				color;
 }					t_bresenham;
@@ -132,9 +132,8 @@ void    	free_function(int nf, int nfl, int nfs, ...);
 void		parse_file(char *filename, t_param *m);
 t_point		iso_proj(int x, int y, int z, t_param *param);
 t_point		choose_proj(int x, int y, int z, t_param *param);
-int			insert_color(int color_start, int color_end, float t);
-int			get_color(int z);
-void	    render(t_param *p);
-void	image_pixel_put(char *data, int x, int y, int color, int bpp, int sl);
+void		image_pixel_put(char *data, int x, int y, int color, int bpp, int sl);
+void		my_mlx_pixel_put(t_param *p, int x, int y, int color);
+void	render(t_param *p);
 
 #endif
