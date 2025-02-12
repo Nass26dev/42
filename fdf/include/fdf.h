@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 23:34:06 by nass              #+#    #+#             */
-/*   Updated: 2025/02/10 09:49:23 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/02/12 13:50:51 by nass             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ typedef struct s_down
 {
 	int				y;
 	int				z;
+	int				color;
 	struct s_down	*next;
 }		t_down;
 

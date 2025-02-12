@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 23:20:50 by nass              #+#    #+#             */
-/*   Updated: 2025/02/10 14:21:29 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/02/11 14:45:22 by nass             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	main(int argc, char **argv)
 	parse_file(argv[1], &p);
 	p.zoom_factor = 32;
 	p.offset_x = 0;
-	p.offset_x = 0;
+	p.offset_y = 0;
 	p.proj = 0;
 	p.mlx = mlx_init();
 	p.win = mlx_new_window(p.mlx, WIDTH, HEIGHT, TITLE);
