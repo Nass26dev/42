@@ -6,7 +6,7 @@
 /*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 18:16:20 by nass              #+#    #+#             */
-/*   Updated: 2025/02/11 14:44:29 by nass             ###   ########.fr       */
+/*   Updated: 2025/02/13 17:37:14 by nass             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	my_mlx_pixel_put(t_param *p, int x, int y, int color)
 {
 	char *dst;
 	
-	if (x >= 0 && x < 1000 && y >= 0 && y < 1000)
+	if (x >= 0 && x < WIDTH && y >= 0 && y < HEIGHT)
 	{
 		dst = p->data + (y * p->sl+ x * (p->bpp / 8));
 		*(unsigned int *)dst = color;
@@ -35,8 +35,16 @@ void draw_line(t_param *p, t_point p1, t_point p2, int color)
     {
         my_mlx_pixel_put(p, p1.x, p1.y, color);
         int e2 = 2 * err;
-        if (e2 > -dy) { err -= dy; p1.x += sx; }
-        if (e2 < dx) { err += dx; p1.y += sy; }
+        if (e2 > -dy)
+        {
+            err -= dy;
+            p1.x += sx;
+        }
+        if (e2 < dx)
+        {
+            err += dx;
+            p1.y += sy;
+        }
     }
 }
 

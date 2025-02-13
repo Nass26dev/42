@@ -6,7 +6,7 @@
 /*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 23:20:50 by nass              #+#    #+#             */
-/*   Updated: 2025/02/11 14:45:22 by nass             ###   ########.fr       */
+/*   Updated: 2025/02/13 17:48:23 by nass             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int	close_window(void *param)
 
 	p = (t_param *)param;
 	free_function(0, 1, 0, p->lst);
+	mlx_destroy_image(p->mlx, p->img);
 	mlx_destroy_window(p->mlx, p->win);
 	mlx_destroy_display(p->mlx);
 	free(p->mlx);
