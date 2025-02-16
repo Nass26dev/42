@@ -6,7 +6,7 @@
 /*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 23:47:26 by nass              #+#    #+#             */
-/*   Updated: 2025/02/12 14:03:36 by nass             ###   ########.fr       */
+/*   Updated: 2025/02/16 20:58:50 by nass             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ void	add_yz(char *line, t_map **map)
 		new->next = NULL;
 		new->y = y;
 		new->z = ft_atol(s_line[y]);
+		new->color = get_color(s_line[y]);
 		*current = new;
 		current = &new->next;
 	}

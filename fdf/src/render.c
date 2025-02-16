@@ -6,7 +6,7 @@
 /*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 18:16:20 by nass              #+#    #+#             */
-/*   Updated: 2025/02/13 17:37:14 by nass             ###   ########.fr       */
+/*   Updated: 2025/02/16 21:01:27 by nass             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,8 @@ void render(t_param *p)
     t_map *current;
     t_down *current_down;
     t_point point1, point2;
-
+    int color;
+    
     current = p->lst;
     while (current) // Parcourt vertical (vers le bas)
     {
@@ -62,12 +63,12 @@ void render(t_param *p)
         {
             // Projection du point actuel
             point1 = iso_proj(current->x, current_down->y, current_down->z, p);
-
+            color = current_down->color;
             // Tracer la ligne vers la droite (horizontal)
             if (current_down->next)
             {
                 point2 = iso_proj(current->x, current_down->next->y, current_down->next->z, p);
-                draw_line(p, point1, point2, 0xFFFFFF);
+                draw_line(p, point1, point2, color);
             }
 
             // Tracer la ligne vers le bas (vertical)
@@ -82,7 +83,7 @@ void render(t_param *p)
                 if (next_down) // Si un point correspondant est trouvé en bas
                 {
                     point2 = iso_proj(current->next->x, next_down->y, next_down->z, p);
-                    draw_line(p, point1, point2, 0xFFFFFF);
+                    draw_line(p, point1, point2, color);
                 }
             }
             current_down = current_down->next;

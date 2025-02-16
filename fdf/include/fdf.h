@@ -6,7 +6,7 @@
 /*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 23:34:06 by nass              #+#    #+#             */
-/*   Updated: 2025/02/12 13:50:51 by nass             ###   ########.fr       */
+/*   Updated: 2025/02/16 20:25:29 by nass             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,8 @@
 #  define SIN30 0.5
 # endif
 
-# ifndef COLOR1
-#  define COLOR1 0xFFFFFF
-# endif
-
-# ifndef COLOR2
-#  define COLOR2 0xFF0000
+# ifndef WHITE
+#  define WHITE 0xFFFFFF
 # endif
 
 typedef struct s_down
@@ -135,6 +131,6 @@ t_point		iso_proj(int x, int y, int z, t_param *param);
 t_point		choose_proj(int x, int y, int z, t_param *param);
 void		image_pixel_put(char *data, int x, int y, int color, int bpp, int sl);
 void		my_mlx_pixel_put(t_param *p, int x, int y, int color);
-void	render(t_param *p);
-
+void		render(t_param *p);
+int 		get_color(char *s_line);
 #endif
