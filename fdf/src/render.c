@@ -6,7 +6,7 @@
 /*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 18:16:20 by nass              #+#    #+#             */
-/*   Updated: 2025/02/17 02:59:02 by nass             ###   ########.fr       */
+/*   Updated: 2025/02/17 17:24:02 by nass             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,20 @@
 
 void fill_by_black(t_param *p)
 {
-    int i;
-    int j;
+	int i;
+	int j;
 
-    i = 0;
-    while (i <= HEIGHT)
-    {
-        j = 0;
-        while (j <= WIDTH)
-        {
-            my_mlx_pixel_put(p, j, i, 0x000000);
-            j++;
-        }
-        i++;
-    }
+	i = 0;
+	while (i <= HEIGHT)
+	{
+		j = 0;
+		while (j <= WIDTH)
+		{
+			my_mlx_pixel_put(p, j, i, BLACK);
+			j++;
+		}
+		i++;
+	}
 }
 
 void	my_mlx_pixel_put(t_param *p, int x, int y, int color)
@@ -43,70 +43,72 @@ void	my_mlx_pixel_put(t_param *p, int x, int y, int color)
 
 void draw_line(t_param *p, t_point p1, t_point p2, int color)
 {
-    int dx = abs(p2.x - p1.x);
-    int dy = abs(p2.y - p1.y);
-    int sx = (p1.x < p2.x) ? 1 : -1;
-    int sy = (p1.y < p2.y) ? 1 : -1;
-    int err = dx - dy;
+	t_bresenham b;
 
-    while (p1.x != p2.x || p1.y != p2.y)
-    {
-        my_mlx_pixel_put(p, p1.x, p1.y, color);
-        int e2 = 2 * err;
-        if (e2 > -dy)
-        {
-            err -= dy;
-            p1.x += sx;
-        }
-        if (e2 < dx)
-        {
-            err += dx;
-            p1.y += sy;
-        }
-    }
+	b.abs_dstx = abs(p2.x - p1.x);
+	b.abs_dsty = abs(p2.y - p1.y);
+	if (p1.x < p2.x)
+		b.dir_x = 1;
+	else
+		b.dir_x = -1;
+	if (p1.y < p2.y)
+		b.dir_y = 1;
+	else
+		b.dir_y = -1;
+	b.err = b.abs_dstx - b.abs_dsty;
+	while (p1.x != p2.x || p1.y != p2.y)
+	{
+		my_mlx_pixel_put(p, p1.x, p1.y, color);
+		b.err2 = 2 * b.err;
+		if (b.err2 > -b.abs_dsty)
+		{
+			b.err -= b.abs_dsty;
+			p1.x += b.dir_x;
+		}
+		if (b.err2 < b.abs_dstx)
+		{
+			b.err += b.abs_dstx;
+			p1.y += b.dir_y;
+		}
+	}
+}
+
+void horizontal_path(t_render *r, t_param *p)
+{
+	r->point1 = iso_proj(r->current->x, r->current_down->y, r->current_down->z, p);
+	r->color = r->current_down->color;
+	if (r->current_down->next)
+	{
+		r->point2 = iso_proj(r->current->x, r->current_down->next->y, r->current_down->next->z, p);
+		draw_line(p, r->point1, r->point2, r->color);
+	}
+	if (r->current->next)
+	{
+		r->next_down = r->current->next->down;
+		while (r->next_down && r->next_down->y != r->current_down->y)
+		r->next_down = r->next_down->next;
+		if (r->next_down)
+		{
+			r->point2 = iso_proj(r->current->next->x, r->next_down->y, r->next_down->z, p);
+			draw_line(p, r->point1, r->point2, r->color);
+		}
+	}
 }
 
 void render(t_param *p)
 {
-    t_map *current;
-    t_down *current_down;
-    t_point point1, point2;
-    int color;
-    
-    current = p->lst;
-    while (current) // Parcourt vertical (vers le bas)
-    {
-        current_down = current->down;
-        while (current_down) // Parcourt horizontal (vers la droite)
-        {
-            // Projection du point actuel
-            point1 = iso_proj(current->x, current_down->y, current_down->z, p);
-            color = current_down->color;
-            // Tracer la ligne vers la droite (horizontal)
-            if (current_down->next)
-            {
-                point2 = iso_proj(current->x, current_down->next->y, current_down->next->z, p);
-                draw_line(p, point1, point2, color);
-            }
-
-            // Tracer la ligne vers le bas (vertical)
-            if (current->next)
-            {
-                t_down *next_down = current->next->down;
-                
-                // Aller au même niveau en y dans la colonne du bas
-                while (next_down && next_down->y != current_down->y)
-                    next_down = next_down->next;
-
-                if (next_down) // Si un point correspondant est trouvé en bas
-                {
-                    point2 = iso_proj(current->next->x, next_down->y, next_down->z, p);
-                    draw_line(p, point1, point2, color);
-                }
-            }
-            current_down = current_down->next;
-        }
-        current = current->next; // Descendre
-    }
-    mlx_put_image_to_window(p->mlx, p->win, p->img, 0, 0);
+	t_render r;
+	
+	r.current = p->lst;
+	while (r.current)
+	{
+		r.current_down = r.current->down;
+		while (r.current_down)
+		{
+			horizontal_path(&r, p);
+			r.current_down = r.current_down->next;
+		}
+		r.current = r.current->next;
+	}
+	mlx_put_image_to_window(p->mlx, p->win, p->img, 0, 0);
 }

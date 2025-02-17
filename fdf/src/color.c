@@ -6,7 +6,7 @@
 /*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 18:30:17 by nass              #+#    #+#             */
-/*   Updated: 2025/02/16 20:26:50 by nass             ###   ########.fr       */
+/*   Updated: 2025/02/17 17:26:13 by nass             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,11 @@
 
 unsigned int hex_to_int(const char *hex)
 {
-    unsigned int result = 0;
+    unsigned int result;
     char c;
 	int digit;
 	
+	result = 0;
 	hex += 2;
     while (*hex)
 	{

@@ -6,7 +6,7 @@
 /*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 23:20:50 by nass              #+#    #+#             */
-/*   Updated: 2025/02/17 02:51:48 by nass             ###   ########.fr       */
+/*   Updated: 2025/02/17 17:24:42 by nass             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,38 +70,6 @@ int	key_hook(int keycode, void *param)
 		fill_by_black(p);
 		render(p);
 	}
-	else if (keycode == 38)
-	{
-		if (p->proj == 1)
-			return (0);
-		p->proj = 1;
-		fill_by_black(p);
-		render(p);
-	}
-	else if (keycode == 233)
-	{
-		if (p->proj == 2)
-			return (0);
-		p->proj = 2;
-		fill_by_black(p);
-		render(p);
-	}
-	else if (keycode == 34)
-	{
-		if (p->proj == 3)
-			return (0);
-		p->proj = 3;
-		fill_by_black(p);
-		render(p);
-	}
-	else if (keycode == 39)
-	{
-		if (p->proj == 4)
-			return (0);
-		p->proj = 4;
-		fill_by_black(p);
-		render(p);
-	}
 	return (0);
 }
 
@@ -145,9 +113,8 @@ int	main(int argc, char **argv)
 	p.zoom_factor = 32;
 	p.offset_x = 0;
 	p.offset_y = 0;
-	p.proj = 1;
 	p.mlx = mlx_init();
-	p.win = mlx_new_window(p.mlx, WIDTH, HEIGHT, TITLE);
+	p.win = mlx_new_window(p.mlx, WIDTH, HEIGHT, "Fdf");
 	p.img = mlx_new_image(p.mlx, WIDTH, HEIGHT);
 	p.data = mlx_get_data_addr(p.img, &p.bpp, &p.sl, &p.endian);
 	render(&p);

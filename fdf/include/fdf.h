@@ -6,7 +6,7 @@
 /*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 23:34:06 by nass              #+#    #+#             */
-/*   Updated: 2025/02/17 01:20:34 by nass             ###   ########.fr       */
+/*   Updated: 2025/02/17 17:20:46 by nass             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,6 @@
 #  define HEIGHT 1200
 # endif
 
-# ifndef TITLE
-#  define TITLE "Fdf"
-# endif
-
 # ifndef COS30
 #  define COS30 0.866
 # endif
@@ -35,6 +31,10 @@
 
 # ifndef WHITE
 #  define WHITE 0xFFFFFF
+# endif
+
+# ifndef BLACK
+#  define BLACK 0x000000
 # endif
 
 typedef struct s_down
@@ -64,7 +64,6 @@ typedef struct s_param
 	int		zoom_factor;
 	int		offset_x;
 	int		offset_y;
-	int		proj;
 	t_map	*lst;
 }		t_param;
 
@@ -83,16 +82,12 @@ typedef struct s_point
 
 typedef struct s_bresenham
 {
-	int				diff_x;
-	int				diff_y;
-	int				steps;
-	float			x_inc;
-	float			y_inc;
-	int			t;
-	int		x;
-	int		y;
-	int				i;
-	int				color;
+	int abs_dstx;
+	int abs_dsty;
+	int dir_x;
+	int dir_y;
+	int err;
+	int err2;
 }					t_bresenham;
 
 typedef struct s_rgb
@@ -104,16 +99,12 @@ typedef struct s_rgb
 
 typedef struct s_render
 {
-	t_point	proj;
-	t_point	next_proj;
-	t_point	first;
-	t_point	second;
 	t_map	*current;
-	t_map	*next;
 	t_down	*current_down;
 	t_down	*next_down;
+	t_point	point1;
+	t_point	point2;
 	int		color;
-	int		color2;
 }					t_render;
 
 # include "../lib/libft/libft.h"
@@ -134,4 +125,5 @@ void		my_mlx_pixel_put(t_param *p, int x, int y, int color);
 void		render(t_param *p);
 int 		get_color(char *s_line);
 void		fill_by_black(t_param *p);
+
 #endif
