@@ -6,7 +6,7 @@
 /*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 23:34:06 by nass              #+#    #+#             */
-/*   Updated: 2025/02/16 20:25:29 by nass             ###   ########.fr       */
+/*   Updated: 2025/02/17 01:20:34 by nass             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,4 +133,5 @@ void		image_pixel_put(char *data, int x, int y, int color, int bpp, int sl);
 void		my_mlx_pixel_put(t_param *p, int x, int y, int color);
 void		render(t_param *p);
 int 		get_color(char *s_line);
+void		fill_by_black(t_param *p);
 #endif

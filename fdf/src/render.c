@@ -6,11 +6,29 @@
 /*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 18:16:20 by nass              #+#    #+#             */
-/*   Updated: 2025/02/16 21:01:27 by nass             ###   ########.fr       */
+/*   Updated: 2025/02/17 02:59:02 by nass             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/fdf.h"
+
+void fill_by_black(t_param *p)
+{
+    int i;
+    int j;
+
+    i = 0;
+    while (i <= HEIGHT)
+    {
+        j = 0;
+        while (j <= WIDTH)
+        {
+            my_mlx_pixel_put(p, j, i, 0x000000);
+            j++;
+        }
+        i++;
+    }
+}
 
 void	my_mlx_pixel_put(t_param *p, int x, int y, int color)
 {
