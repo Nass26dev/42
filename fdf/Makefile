@@ -19,7 +19,7 @@ LIBFTFLAGS = -Llib/libft -lft
 SRCS = src/main.c \
 			src/parser.c \
 			src/free.c \
-			src/projections.c \
+			src/render_utils.c \
 			src/render.c \
 			src/color.c
 

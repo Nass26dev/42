@@ -3,22 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 23:47:26 by nass              #+#    #+#             */
-/*   Updated: 2025/02/16 20:58:50 by nass             ###   ########.fr       */
+/*   Updated: 2025/02/19 14:36:31 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/fdf.h"
 
-void	add_yz(char *line, t_map **map)
+t_down	**search_last(t_map **map)
 {
 	t_map	*actual;
-	t_down	*new;
-	t_down	**current;
+
+	actual = *map;
+	while (actual->next)
+		actual = actual->next;
+	return (&actual->down);
+}
+
+char	**split_line(char *line, t_map **map)
+{
 	char	**s_line;
-	int		y;
 
 	s_line = ft_split(line, ' ');
 	if (!s_line)
@@ -26,11 +32,19 @@ void	add_yz(char *line, t_map **map)
 		free_function(1, 1, 0, line, *map);
 		exit(EXIT_FAILURE);
 	}
+	return (s_line);
+}
+
+void	add_yz(char *line, t_map **map)
+{
+	t_down	*new;
+	t_down	**current;
+	char	**s_line;
+	int		y;
+
 	y = -1;
-	actual = *map;
-	while (actual->next)
-		actual = actual->next;
-	current = &actual->down;
+	s_line = split_line(line, map);
+	current = search_last(map);
 	while (s_line[++y])
 	{
 		new = malloc(sizeof(t_down));
