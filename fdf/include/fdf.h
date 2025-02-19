@@ -6,7 +6,7 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 23:34:06 by nass              #+#    #+#             */
-/*   Updated: 2025/02/19 14:37:14 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/02/19 14:50:02 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,13 +98,6 @@ typedef struct s_bresenham
 	int				err;
 	int				err2;
 }					t_bresenham;
-
-typedef struct s_rgb
-{
-	int				r;
-	int				g;
-	int				b;
-}					t_rgb;
 
 typedef struct s_render
 {
