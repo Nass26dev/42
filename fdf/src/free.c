@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 23:59:18 by nass              #+#    #+#             */
-/*   Updated: 2025/01/23 15:49:14 by nass             ###   ########.fr       */
+/*   Updated: 2025/02/19 14:11:06 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,12 @@ void	free_lst(t_map *lst)
 	}
 }
 
-void    free_function(int nf, int nfl, int nfs, ...)
+void	free_function(int nf, int nfl, int nfs, ...)
 {
-	int			i;
-	va_list(args);
+	int		i;
 	t_free	f;
-	
+
+	va_list(args);
 	va_start(args, nfs);
 	i = -1;
 	while (++i < nf)

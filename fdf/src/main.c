@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 23:20:50 by nass              #+#    #+#             */
-/*   Updated: 2025/02/17 17:24:42 by nass             ###   ########.fr       */
+/*   Updated: 2025/02/19 14:15:12 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	close_window(void *param)
 {
-	t_param *p;
+	t_param	*p;
 
 	p = (t_param *)param;
 	free_function(0, 1, 0, p->lst);
@@ -25,28 +25,9 @@ int	close_window(void *param)
 	exit(EXIT_SUCCESS);
 }
 
-int	key_hook(int keycode, void *param)
+void	shifting(t_param *p, int keycode)
 {
-	t_param	*p;
-
-	p = (t_param *)param;
-	if (keycode == 65307)
-		close_window(param);
-	else if (keycode == 61)
-	{
-		p->zoom_factor *= 2;
-		fill_by_black(p);
-		render(p);
-	}
-	else if (keycode == 45)
-	{
-		if (p->zoom_factor == 2)
-			return (0);
-		p->zoom_factor /= 2;
-		fill_by_black(p);
-		render(p);
-	}
-	else if (keycode == 65362)
+	if (keycode == 65362)
 	{
 		p->offset_y -= 20;
 		fill_by_black(p);
@@ -70,24 +51,37 @@ int	key_hook(int keycode, void *param)
 		fill_by_black(p);
 		render(p);
 	}
+}
+
+int	key_hook(int keycode, void *param)
+{
+	t_param	*p;
+
+	p = (t_param *)param;
+	if (keycode == 65307)
+		close_window(param);
+	else if (keycode == 61)
+	{
+		p->zoom_factor *= 2;
+		fill_by_black(p);
+		render(p);
+	}
+	else if (keycode == 45)
+	{
+		if (p->zoom_factor == 2)
+			return (0);
+		p->zoom_factor /= 2;
+		fill_by_black(p);
+		render(p);
+	}
+	else
+		shifting(p, keycode);
 	return (0);
 }
 
-void	image_pixel_put(char *data, int x, int y, int color, int bpp, int sl)
+bool	verif_file(char *file)
 {
-	if (x >= 0 && x < WIDTH && y >= 0 && y < HEIGHT)
-	{
-		char	*pixel;
-
-		pixel = data + (y * sl + x * (bpp / 8));
-
-		*(unsigned int *)pixel = color;
-	}
-}
-
-bool verif_file(char *file)
-{
-	int i;
+	int	i;
 
 	i = ft_strlen(file) - 1;
 	if (file[i--] != 'f')
@@ -100,9 +94,10 @@ bool verif_file(char *file)
 		return (false);
 	return (true);
 }
+
 int	main(int argc, char **argv)
 {
-	t_param p;
+	t_param	p;
 
 	if (argc != 2 || !verif_file(argv[1]))
 	{
