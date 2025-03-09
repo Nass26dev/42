@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/26 11:40:38 by nass              #+#    #+#             */
-/*   Updated: 2025/01/24 17:23:36 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/03/09 01:31:18 by nass             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,26 +21,19 @@
 #include <sys/time.h>
 #include <stdbool.h>
 
-typedef struct s_philosopher {
+typedef struct s_philo {
 	int				id;
-	bool			is_max_meals;
 	int				max_meals;
 	int				meals_eaten;
 	int				last_meal_time;
 	int				time_to_die;
 	int				time_to_eat;
 	int				time_to_sleep;
-	int				into_sleep;
+	pthread_mutex_t *write_mutex;
 	pthread_mutex_t *left_fork;
 	pthread_mutex_t *right_fork;
-	pthread_t		thread;
-} 		t_philosopher;
-
-typedef struct s_list
-{
-	t_philosopher	philo;
-	struct s_list 	*next;
-}		t_list;
+	struct timeval start_time;
+} 		t_philo;
 
 typedef struct s_args
 {
@@ -49,12 +42,12 @@ typedef struct s_args
 	int		time_to_eat;
 	int 	time_to_sleep;
 	int		max_meals;
-	bool	is_max_meals;
 }		t_args;
 
-t_list		*create_philosophers(int argc, char **argv);
-void		free_lst(t_list *lst, int exit_code);
-long int	ft_atol(const char *str);
-long get_current_time_ms();
+t_args recup_args(char **argv);
+t_philo *create_philos(t_args args, pthread_mutex_t *forks, pthread_mutex_t *write_mutex, struct timeval start_time);
+pthread_mutex_t *create_forks(t_args args);
+void *routine(void *arg);
+pthread_t *create_threads(t_args args, t_philo *philos);
 
 #endif

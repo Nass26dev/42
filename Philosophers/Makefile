@@ -6,7 +6,7 @@
 #    By: nass <nass@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/26 11:39:14 by nass              #+#    #+#              #
-#    Updated: 2025/01/25 14:18:40 by nass             ###   ########.fr        #
+#    Updated: 2025/03/09 01:09:23 by nass             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,8 +14,8 @@ NAME = philo
 
 CC = cc
 CFLAGS = -Wall -Werror -Wextra -MMD -MP
-SRCS = src/philo.c \
-			src/recup_args.c
+SRCS = src/main.c \
+			src/create.c
 
 MAKEDIR = make
 OBJDIR = make/objs
