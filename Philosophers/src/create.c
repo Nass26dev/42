@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   create.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 17:49:23 by nass              #+#    #+#             */
-/*   Updated: 2025/03/09 01:30:25 by nass             ###   ########.fr       */
+/*   Updated: 2025/03/11 08:44:16 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
-t_philo init_philo(t_args args, pthread_mutex_t *forks, int id, pthread_mutex_t *write_mutex, struct timeval start_time)
+t_philo init_philo(t_args args, pthread_mutex_t *forks, int id, pthread_mutex_t *print_mutex, struct timeval start_time)
 {
 	t_philo philo;
 
-	philo.write_mutex = write_mutex;
+	philo.print_mutex = print_mutex;
 	philo.id = id;
 	philo.max_meals = args.max_meals;
 	philo.meals_eaten = 0;
@@ -29,7 +29,7 @@ t_philo init_philo(t_args args, pthread_mutex_t *forks, int id, pthread_mutex_t 
 	return (philo);
 }
 
-t_philo *create_philos(t_args args, pthread_mutex_t *forks, pthread_mutex_t *write_mutex, struct timeval start_time)
+t_philo *create_philos(t_args args, pthread_mutex_t *forks, pthread_mutex_t *print_mutex, struct timeval start_time)
 {
 	t_philo *philos;
 	int		id;
@@ -38,7 +38,7 @@ t_philo *create_philos(t_args args, pthread_mutex_t *forks, pthread_mutex_t *wri
 	philos = malloc(args.numbers_of_philosophers * sizeof(t_philo));
 	while (id < args.numbers_of_philosophers)
 	{
-		philos[id] = init_philo(args, forks, id, write_mutex, start_time);
+		philos[id] = init_philo(args, forks, id, print_mutex, start_time);
 		id++;
 	}
 	return (philos);
