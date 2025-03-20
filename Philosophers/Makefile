@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+         #
+#    By: nass <nass@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/12/26 11:39:14 by nyousfi           #+#    #+#              #
-#    Updated: 2025/03/17 16:26:45 by nyousfi          ###   ########.fr        #
+#    Created: 2025/03/18 12:58:13 by nass              #+#    #+#              #
+#    Updated: 2025/03/20 15:10:16 by nass             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,8 +15,11 @@ NAME = philo
 CC = cc
 CFLAGS = -Wall -Werror -Wextra -MMD -MP
 SRCS = src/main.c \
-			src/create.c \
-			src/monitor.c
+			src/args.c \
+			src/mutexes.c \
+			src/philo.c \
+			src/simulation.c \
+			src/time.c
 
 MAKEDIR = make
 OBJDIR = make/objs
