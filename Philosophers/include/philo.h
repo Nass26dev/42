@@ -6,7 +6,7 @@
 /*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 12:59:00 by nass              #+#    #+#             */
-/*   Updated: 2025/03/21 08:54:59 by nass             ###   ########.fr       */
+/*   Updated: 2025/03/21 10:22:01 by nass             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,12 +80,15 @@ typedef struct s_monitor
 	pthread_mutex_t *last_meal_time_mutex;
 	pthread_mutex_t *meals_eaten_mutex;
 	pthread_mutex_t *end_simulation_mutex;
+	long current_time;
 	bool *running_lst;
 	int	*meals_eaten_lst;
 	long *last_meal_time_lst;
 	bool *end_simulation;
 	bool infinite_loop;
 	long time_to_die;
+	long time_to_eat;
+	long time_to_sleep;
 	int meals_to_reach;
 	int numbers_of_philosophers;
 	long start_time;

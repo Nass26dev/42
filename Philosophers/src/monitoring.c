@@ -6,7 +6,7 @@
 /*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 07:46:52 by nass              #+#    #+#             */
-/*   Updated: 2025/03/21 09:05:06 by nass             ###   ########.fr       */
+/*   Updated: 2025/03/21 10:22:19 by nass             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ void create_monitor(t_mutexes mutexes, t_utils *utils_ptr)
     utils_ptr->monitor.start_mutexes = mutexes.start_mutexes;
     utils_ptr->monitor.running_lst = utils_ptr->running_lst;
     utils_ptr->monitor.time_to_die = utils_ptr->args.time_to_die;
+    utils_ptr->monitor.time_to_eat = utils_ptr->args.time_to_eat;
+    utils_ptr->monitor.time_to_sleep = utils_ptr->args.time_to_sleep;
     utils_ptr->monitor.meals_eaten_lst = utils_ptr->meals_eaten_lst;
     utils_ptr->monitor.last_meal_time_lst = utils_ptr->last_meals_time;
     utils_ptr->monitor.last_meal_time_mutex = mutexes.last_meal_time_mutexes;

@@ -6,7 +6,7 @@
 /*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:06:52 by nass              #+#    #+#             */
-/*   Updated: 2025/03/21 09:22:18 by nass             ###   ########.fr       */
+/*   Updated: 2025/03/21 10:23:29 by nass             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,35 @@ bool check_meals_reached(t_monitor *monitor)
             }
         }
     }
+    if (monitor->infinite_loop)
+        return (false);
     return (true);
+}
+
+bool check_death(t_monitor *monitor)
+{
+    int id;
+
+    id = 0;
+    while (id < monitor->numbers_of_philosophers)
+    {
+        pthread_mutex_lock(monitor->start_mutexes);
+        if (monitor->running_lst[id])
+        {
+            pthread_mutex_unlock(monitor->start_mutexes);
+            pthread_mutex_lock(monitor->last_meal_time_mutex);
+            if (((monitor->current_time - monitor->last_meal_time_lst[id]) - (monitor->time_to_eat + monitor->time_to_sleep)) > monitor->time_to_die)
+            {
+                lock_and_print("%ld %d is dead\n", monitor->current_time - monitor->start_time, id, monitor->print_mutex);
+                pthread_mutex_unlock(monitor->last_meal_time_mutex);
+                return (true);
+            }
+            pthread_mutex_unlock(monitor->last_meal_time_mutex);
+        }
+        pthread_mutex_unlock(monitor->start_mutexes);
+        id++;
+    }
+    return (false);   
 }
 
 void *monitor_routine(void *arg)
@@ -54,7 +82,15 @@ void *monitor_routine(void *arg)
     while (1)
     {
         usleep(25);
+        monitor->current_time = get_time_in_ms();
         if (check_meals_reached(monitor))
+        {
+            pthread_mutex_lock(monitor->end_simulation_mutex);
+            *(monitor->end_simulation) = true;
+            pthread_mutex_unlock(monitor->end_simulation_mutex);
+            break ;
+        }
+        if (check_death(monitor))
         {
             pthread_mutex_lock(monitor->end_simulation_mutex);
             *(monitor->end_simulation) = true;
@@ -71,6 +107,9 @@ void *philo_routine(void *arg)
 
     philo = (t_philo *)arg;
     pthread_mutex_lock(philo->start_mutex);
+    pthread_mutex_lock(philo->last_meal_time_mutex);
+    *(philo->last_meal_time) = get_time_in_ms();
+    pthread_mutex_unlock(philo->last_meal_time_mutex);
     *(philo->running) = true;
     pthread_mutex_unlock(philo->start_mutex);
     while (!*(philo->end_simulation))
@@ -94,7 +133,7 @@ void *philo_routine(void *arg)
         if (!*(philo->end_simulation))
         {
 		    lock_and_print("%ld %d has taken a fork\n", (get_time_in_ms() - philo->start_time), philo->id, philo->print_mutex);
-		    lock_and_print("%ld %d is eating\n", (get_time_in_ms() - philo->start_time), philo->id, philo->print_mutex);
+            lock_and_print("%ld %d is eating\n", (get_time_in_ms() - philo->start_time), philo->id, philo->print_mutex);
         }
         pthread_mutex_unlock(philo->end_simulation_mutex);
         
