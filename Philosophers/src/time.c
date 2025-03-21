@@ -6,7 +6,7 @@
 /*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 15:04:39 by nass              #+#    #+#             */
-/*   Updated: 2025/03/20 15:04:51 by nass             ###   ########.fr       */
+/*   Updated: 2025/03/21 07:57:31 by nass             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,4 +32,5 @@ void get_start_time(t_utils *utils_ptr)
 		utils_ptr->philos[id].start_time = start_time;
 		id++;
 	}
+	utils_ptr->monitor.start_time = start_time;
 }

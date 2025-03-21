@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   args.c                                             :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 14:50:28 by nass              #+#    #+#             */
-/*   Updated: 2025/03/20 14:54:15 by nass             ###   ########.fr       */
+/*   Updated: 2025/03/21 09:05:15 by nass             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ long int	ft_atol(const char *str)
 	return (nb * sign);
 }
 
-void	recup_args(t_utils *utils_ptr, char **argv)
+void	create_utils(t_utils *utils_ptr, char **argv)
 {
 	utils_ptr->args.numbers_of_philosophers = ft_atol(argv[1]);
 	utils_ptr->args.time_to_die = ft_atol(argv[2]);
@@ -50,4 +50,8 @@ void	recup_args(t_utils *utils_ptr, char **argv)
     }
 	else
 		utils_ptr->args.infinite_loop = true;
+	utils_ptr->running_lst = malloc(sizeof(bool) * utils_ptr->args.numbers_of_philosophers);
+	utils_ptr->meals_eaten_lst = malloc(sizeof(int) * utils_ptr->args.numbers_of_philosophers);
+	utils_ptr->last_meals_time = malloc(sizeof(long) * utils_ptr->args.numbers_of_philosophers);
+	utils_ptr->end_simulation = malloc(sizeof(bool));
 }
