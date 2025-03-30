@@ -5,8 +5,8 @@
 #                                                     +:+ +:+         +:+      #
 #    By: nass <nass@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/03/18 12:58:13 by nass              #+#    #+#              #
-#    Updated: 2025/03/21 08:03:27 by nass             ###   ########.fr        #
+#    Created: 2025/03/28 16:26:18 by nass              #+#    #+#              #
+#    Updated: 2025/03/30 05:06:51 by nass             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,12 +15,10 @@ NAME = philo
 CC = cc
 CFLAGS = -Wall -Werror -Wextra -MMD -MP
 SRCS = src/main.c \
-			src/utils.c \
-			src/mutexes.c \
-			src/philo.c \
-			src/simulation.c \
-			src/time.c \
-			src/monitoring.c
+			src/data.c \
+			src/data_utils.c \
+			src/routine.c \
+			src/routine_utils.c
 
 MAKEDIR = make
 OBJDIR = make/objs
