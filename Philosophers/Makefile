@@ -1,24 +1,12 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: nass <nass@student.42.fr>                  +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/03/28 16:26:18 by nass              #+#    #+#              #
-#    Updated: 2025/03/30 05:06:51 by nass             ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
 NAME = philo
 
 CC = cc
 CFLAGS = -Wall -Werror -Wextra -MMD -MP
 SRCS = src/main.c \
-			src/data.c \
-			src/data_utils.c \
-			src/routine.c \
-			src/routine_utils.c
+		src/data.c \
+		src/data_utils.c \
+		src/routine.c \
+		src/routine_utils.c
 
 MAKEDIR = make
 OBJDIR = make/objs
@@ -27,7 +15,8 @@ DEPDIR = make/deps
 OBJS = $(SRCS:src/%.c=$(OBJDIR)/%.o)
 DEPS = $(SRCS:src/%.c=$(DEPDIR)/%.d)
 
-HEADER = include/philo.h
+HEADER = include/philo.h \
+			include/struct.h
 
 COMPILED = 0
 MESSAGE_COLOR_GREEN = \033[1;32m

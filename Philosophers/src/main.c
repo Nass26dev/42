@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/29 06:36:19 by nass              #+#    #+#             */
-/*   Updated: 2025/03/29 07:16:03 by nass             ###   ########.fr       */
+/*   Created: 2025/04/03 08:20:54 by nyousfi           #+#    #+#             */
+/*   Updated: 2025/04/03 10:23:24 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,14 @@
 
 int main(int argc, char **argv)
 {
-    t_data data;
-    
-    recup_args(argc, argv, &data);
-    create_mutexes(&data);
-    data.start_time = get_time_in_ms();
-    create_philos(&data);
-    create_threads(&data);
+	t_data d;
+	
+	check_args(argc, argv);
+	create_data(&d, argc, argv);
+	create_mutex(&d);
+	d.start_time = get_time_ms();
+	create_philo_and_monitor(&d);
+	launch_simulation(&d);
+	wait_and_stop_simulation(&d);
+	return (EXIT_SUCCESS);
 }

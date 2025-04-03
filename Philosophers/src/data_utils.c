@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   data_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nass <nass@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/29 06:45:14 by nass              #+#    #+#             */
-/*   Updated: 2025/03/30 05:09:27 by nass             ###   ########.fr       */
+/*   Created: 2025/04/03 08:33:11 by nyousfi           #+#    #+#             */
+/*   Updated: 2025/04/03 17:47:42 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
-void print_and_exit(char *error_msg)
+void print_and_exit(char *to_print)
 {
-    printf("%s\n", error_msg);
-    exit(EXIT_FAILURE);
+	printf("%s", to_print);
+	exit(EXIT_FAILURE);
 }
 
 long long	ft_atoll(const char *str)
@@ -33,37 +33,43 @@ long long	ft_atoll(const char *str)
 			sign *= -sign;
 		str++;
 	}
-	if (*str < '0' && *str > '9')
-		return (0);
+	if (*str < '0' || *str > '9')
+		return (LLONG_MAX);
 	while (*str >= '0' && *str <= '9')
 	{
 		nb = (nb * 10) + (*str - '0');
 		str++;
 	}
+	if (*str < '0' && *str > '9' && *str != 0)
+		return (LLONG_MAX);
 	return (nb * sign);
+}
+
+long get_time_ms(void)
+{
+	struct timeval tv;
+
+	gettimeofday(&tv, NULL);
+	return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
 }
 
 void init_philo(t_philo *new_philo, t_data data)
 {
-    static int id;
-    
-    new_philo->id = id;
-    new_philo->meal_eaten = 0;
-    new_philo->meals_to_reach = data.args.meals_to_reach;
-    new_philo->time_to_die = data.args.time_to_die;
-    new_philo->time_to_eat = data.args.time_to_eat;
-    new_philo->time_to_sleep = data.args.time_to_sleep;
-    new_philo->print_mutex = data.mutexes.print_mutex;
-    new_philo->left_fork = &data.mutexes.forks[id];
-    new_philo->right_fork = &data.mutexes.forks[(id + 1) % data.args.numbers_of_philosophers];
-    new_philo->start_time = data.start_time;
-    id++;
-}
+	static long id;
 
-long get_time_in_ms(void)
-{
-    struct timeval tv;
-
-    gettimeofday(&tv, NULL);
-    return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
+	new_philo->id = id;
+	new_philo->meals_to_reach = data.a.meals_to_reach;
+	new_philo->meal_eaten = &data.meal_eaten[id];
+	*(new_philo->meal_eaten) = 0;
+	new_philo->last_meal_time = &data.last_meal_time[id];
+	new_philo->left_fork = &data.mu.forks[id];
+    new_philo->right_fork = &data.mu.forks[(id + 1) % data.a.numbers_of_philos];
+	new_philo->print_mutex = data.mu.print_mutex;
+	new_philo->meal_mutex = &data.mu.meal_mutex[id];
+	new_philo->start_time = data.start_time;
+	new_philo->stop_mutex = data.mu.stop_mutex;
+	new_philo->stop_simulation = data.end_simulation;
+	new_philo->time_to_eat = data.a.time_to_eat;
+	new_philo->time_to_sleep = data.a.time_to_sleep;
+	id++;
 }
