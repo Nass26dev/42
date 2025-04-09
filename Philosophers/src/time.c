@@ -1,26 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   data.c                                             :+:      :+:    :+:   */
+/*   time.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/09 09:12:01 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/04/09 09:19:01 by nyousfi          ###   ########.fr       */
+/*   Created: 2025/04/09 09:55:40 by nyousfi           #+#    #+#             */
+/*   Updated: 2025/04/09 10:17:34 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
-void fill_data_with_utils(t_data *data)
+long get_time_in_ms()
 {
-	bool stop_simulation;
+	struct timeval tv;
 
-	data->utils.stop_simulation = &stop_simulation;
-	data->utils.last_meal_time = malloc(sizeof(long) * data->args.numbers_of_philos);
-	if (!data->utils.last_meal_time)
-		last_meal_time_malloc_error(*data);
-	data->utils.meal_eaten = malloc(sizeof(long) * data->args.numbers_of_philos);
-	if (!data->utils.meal_eaten)
-		meal_eaten_malloc_error(*data);
+	gettimeofday(&tv, NULL);
+	return ((long)((tv.tv_sec * 1000) + (tv.tv_usec / 1000)));
+}
+
+void add_start_time(t_data *data)
+{
+	long id;
+	long start_time;
+	
+	id = 0;
+	start_time = get_time_in_ms();
+	while (id < data->args.numbers_of_philos)
+	{
+		data->philos->start_time = start_time;
+		id++;
+	}
+	data->monitor.start_time = start_time;
 }

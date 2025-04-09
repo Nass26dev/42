@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/03 08:20:54 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/04/03 10:23:24 by nyousfi          ###   ########.fr       */
+/*   Created: 2025/04/09 08:21:24 by nyousfi           #+#    #+#             */
+/*   Updated: 2025/04/09 10:19:06 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,12 @@
 
 int main(int argc, char **argv)
 {
-	t_data d;
+	t_data data;
 	
-	check_args(argc, argv);
-	create_data(&d, argc, argv);
-	create_mutex(&d);
-	d.start_time = get_time_ms();
-	create_philo_and_monitor(&d);
-	launch_simulation(&d);
-	wait_and_stop_simulation(&d);
-	return (EXIT_SUCCESS);
+	recup_args(argc, argv, &data.args);
+	create_mutexes(&data);
+	create_philos_and_monitor(&data);
+	launch_routine(&data);
+	// free ressources
+	return (0);
 }
