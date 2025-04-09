@@ -3,16 +3,10 @@ NAME = philo
 CC = cc
 CFLAGS = -Wall -Werror -Wextra -MMD -MP
 SRCS = src/main.c \
-		src/args.c \
-		src/data.c \
-		src/mutexes.c \
+		src/create.c \
+		src/create_utils.c \
 		src/routine.c \
-		src/routine_utils.c \
-		src/philo_and_monitor.c \
-		src/time.c \
-		src/error_handling/mutex_errors.c \
-		src/error_handling/malloc_errors.c \
-		src/error_handling/thread_errors.c
+		src/utils.c
 
 MAKEDIR = make
 OBJDIR = make/objs
@@ -44,7 +38,6 @@ $(NAME): $(OBJS)
 $(OBJDIR)/%.o: src/%.c $(HEADER)
 	@echo "$(MESSAGE_COLOR_YELLOW)Compiling $@... 🛠️$(MESSAGE_RESET)"
 	@mkdir -p $(OBJDIR) $(DEPDIR)
-	@mkdir -p $(OBJDIR)/error_handling $(DEPDIR)/error_handling
 	@$(CC) $(CFLAGS) -Iinclude -c $< -o $@
 	@mv -f $(OBJDIR)/$*.d $(DEPDIR)/$*.d
 	@$(eval COMPILED := 1)

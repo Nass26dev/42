@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   args.c                                             :+:      :+:    :+:   */
+/*   create_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/09 08:29:56 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/04/09 08:44:30 by nyousfi          ###   ########.fr       */
+/*   Created: 2025/04/09 11:08:09 by nyousfi           #+#    #+#             */
+/*   Updated: 2025/04/09 11:30:46 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,32 +39,22 @@ long long	ft_atoll(const char *str)
 	return (nb * sign);
 }
 
-long verif_arg(char *arg)
-{
-	long long temp;
-
-	temp = ft_atoll(arg);
-	if (temp > LONG_MAX)
-	{
-		write(STDERR_FILENO, "arg is > than long max\n", 24);
-		exit(EXIT_FAILURE);
-	}
-	return ((long)temp);
-}
-
-void recup_args(int argc, char **argv, t_args *args)
+void check_args(int argc, char **argv, t_table *table)
 {
 	if (argc != 5 && argc != 6)
-	{
-		write(STDERR_FILENO, "invalid numbers of arguments\n", 29);
-		exit(EXIT_FAILURE);
-	}
-	args->numbers_of_philos = verif_arg(argv[1]);
-	args->time_to_die = verif_arg(argv[2]);
-	args->time_to_eat = verif_arg(argv[3]);
-	args->time_to_sleep = verif_arg(argv[4]);
+		print_error("invalid number of arguments\n", 28);
+	if (ft_atoll(argv[1]) > MAX_PHILOS)
+		print_error("nb of philos is > MAX_PHILOS\n", 27);
+	table->nb_philos = ft_atoll(argv[1]);
+	if (ft_atoll(argv[2]) > LONG_MAX)
+		print_error("time to die is > LONG_MAX\n", 26);
+	if (ft_atoll(argv[3]) > LONG_MAX)
+		print_error("time to eat is > LONG_MAX\n", 26);
+	if (ft_atoll(argv[4]) > LONG_MAX)
+		print_error("time to sleep is > LONG_MAX\n", 28);
 	if (argc == 6)
-		args->meals_to_reach = verif_arg(argv[5]);
-	else
-		args->numbers_of_philos = -1;
+	{
+		if (ft_atoll(argv[5]) > LONG_MAX)
+			print_error("meals to reach is > LONG_MAX\n", 29);
+	}
 }

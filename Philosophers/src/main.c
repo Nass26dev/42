@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/09 08:21:24 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/04/09 10:19:06 by nyousfi          ###   ########.fr       */
+/*   Created: 2025/04/09 10:51:08 by nyousfi           #+#    #+#             */
+/*   Updated: 2025/04/09 12:21:52 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 int main(int argc, char **argv)
 {
-	t_data data;
-	
-	recup_args(argc, argv, &data.args);
-	create_mutexes(&data);
-	create_philos_and_monitor(&data);
-	launch_routine(&data);
-	// free ressources
-	return (0);
+	t_table table;
+
+	check_args(argc, argv, &table);
+	create_mutexes(&table);
+	create_philos(&table, argc, argv);
+	launch_routines(&table);
+	free_ressources(table, table.nb_philos, EXIT_SUCCESS, 3);
+	return (0);	
 }

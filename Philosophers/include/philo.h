@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/09 08:31:07 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/04/09 10:30:11 by nyousfi          ###   ########.fr       */
+/*   Created: 2025/04/09 10:51:28 by nyousfi           #+#    #+#             */
+/*   Updated: 2025/04/09 12:24:02 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,102 +21,58 @@
 #include <limits.h>
 #include <unistd.h>
 
+# define RESET   	"\033[0m"
+# define RED     	"\033[31m"
+# define GREEN   	"\033[32m"
+# define BLUE		"\033[0;34m"
+# define t_mutex pthread_mutex_t
+# define MAX_PHILOS 200
+
 typedef struct s_philo
 {
-	long id;
-	long time_to_eat;
-	long time_to_sleep;
+	int id;
+	long t_die;
+	long t_eat;
+	long t_sleep;
+	long meal_reach;
+	long last_meal;
 	long start_time;
-	long *meal_eaten;
-	long *last_meal_time;
-	bool *stop_simulation;
-	pthread_mutex_t *print_mutex;
-	pthread_mutex_t *left_fork;
-	pthread_mutex_t *right_fork;
-	pthread_mutex_t *stop_mutex;
-	pthread_mutex_t *meal_mutex;
-}				t_philo;
-
-typedef struct s_mutexes
-{
-	pthread_mutex_t print_mutex;
-	pthread_mutex_t *forks;
-	pthread_mutex_t stop_mutex;
-	pthread_mutex_t *meal_mutex;
-}				t_mutexes;
-
-typedef struct s_args
-{
-	long			numbers_of_philos;
-	long			time_to_die;
-	long			time_to_eat;
-	long			time_to_sleep;
-	long			meals_to_reach;
-}				t_args;
-
-typedef struct s_utils
-{
-	long *meal_eaten;
-	long *last_meal_time;
-	bool *stop_simulation;
-}				t_utils;
-
-typedef struct s_monitor
-{
-	long meals_to_reach;
-	long *meal_eaten;
-	long *last_meal_time;
-	long time_to_die;
-	long start_time;
+	long meals_eaten;
 	long nb_philos;
-	bool *stop_simulation;
-	pthread_mutex_t *print_mutex;
-	pthread_mutex_t *stop_mutex;
-	pthread_mutex_t *meal_mutexes;
-}				t_monitor;
+	t_mutex *left_fork;
+	t_mutex *right_fork;
+	t_mutex *print_mutex;
+	t_mutex *meal_mutex;
+	
+}				t_philo;
 
 typedef struct s_threads
 {
-	pthread_t *philos_threads;
-	pthread_t monitor_thread;
+	pthread_t philos[MAX_PHILOS];
+	pthread_t monitor;
 }				t_threads;
 
-typedef struct s_data
+typedef struct s_table
 {
-	t_args args;
-	t_mutexes mutexes;
-	t_utils utils;
-	t_philo *philos;
-	t_monitor monitor;
-	t_threads threads;
-}				t_data;
+	t_philo 		philos[MAX_PHILOS];
+	t_mutex forks[MAX_PHILOS];
+	t_mutex print_mutex;
+	t_mutex meal_mutex;
+	int nb_philos;
+}				t_table;
 
-// args.c
-void recup_args(int argc, char **argv, t_args *args);
-// mutexes.c
-void create_mutexes(t_data *data);
-// mutex_errors.c
-void forks_init_error(long nb, t_data data);
-void print_mutex_init_error(t_data data);
-void stop_mutex_init_error(t_data data);
-void meal_mutex_init_error(long nb, t_data data);
-// malloc_errors.c
-void last_meal_time_malloc_error(t_data data);
-void meal_eaten_malloc_error(t_data data);
-void philos_threads_malloc_error(t_data data);
-void philos_malloc_error(t_data data);
-void meal_mutex_malloc_error(t_data data);
-// thread_error.c
-void monitor_thread_error(t_data data);
-void philo_thread_error(long nb, t_data data);
+// utils.c
+void print_error(char *error_msg, int message_length);
+void free_ressources(t_table table, int nb, int exit_code, int step);
+long get_current_time_ms(void);
+void print_step(t_philo *philo, char *color, char *step);
+// create.c
+void create_mutexes(t_table *table);
+void create_philos(t_table *table, int argc, char **argv);
+// create_utils.c
+void check_args(int argc, char **argv, t_table *table);
+long long	ft_atoll(const char *str);
 // routine.c
-void launch_routine(t_data *data);
-// philo_and_monitor.c
-void create_philos_and_monitor(t_data *data);
-// data.c
-void fill_data_with_utils(t_data *data);
-// time.c
-void add_start_time(t_data *data);
-long get_time_in_ms();
+void launch_routines(t_table *table);
 
 #endif
