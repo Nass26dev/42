@@ -4,7 +4,6 @@ CC = cc
 CFLAGS = -Wall -Werror -Wextra -MMD -MP
 SRCS = src/main.c \
 		src/create.c \
-		src/create_utils.c \
 		src/routine.c \
 		src/utils.c
 
