@@ -6,7 +6,7 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 11:52:25 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/04/09 13:04:59 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/04/09 14:03:00 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ bool all_meals_reached(t_philo *philos)
 	int i;
 
 	i = 0;
+	if (philos[0].meal_reach == -1)
+		return (false);
 	while (i < philos[0].nb_philos)
 	{
 		if (philos[i].meals_eaten >= philos[i].meal_reach)
@@ -32,18 +34,16 @@ void *monitor_routine(void *arg)
 	t_philo *philos;
 	int i;
 
-	i = 0;
 	philos = (t_philo *)arg;
 	while (1)
 	{
-		usleep(25);
+		i = 0;
 		while (i < philos[0].nb_philos)
 		{
 			pthread_mutex_lock(philos->meal_mutex);
 			if (get_current_time_ms() - philos[i].last_meal > philos[i].t_die)
 			{
 				pthread_mutex_unlock(philos->meal_mutex);
-				
 				pthread_mutex_lock(philos[i].print_mutex);
 				printf("%ld", get_current_time_ms() - philos[i].start_time);
 				printf(" %d %s%s%s\n", philos[i].id, RED, "is dead", RESET);
@@ -62,9 +62,15 @@ void philo_routine(t_philo *philo)
 {
 	while (1)
 	{
-		pthread_mutex_lock(philo->left_fork);
+		if (philo->id != 1)
+			pthread_mutex_lock(philo->left_fork);
+		else
+			pthread_mutex_lock(philo->right_fork);
 		print_step(philo, BLUE, "has taken a fork");
-		pthread_mutex_lock(philo->right_fork);
+		if (philo->id != 1)
+			pthread_mutex_lock(philo->right_fork);
+		else
+			pthread_mutex_lock(philo->left_fork);
 		print_step(philo, BLUE, "has taken a fork");
 		pthread_mutex_lock(philo->meal_mutex);
 		print_step(philo, GREEN, "is eating");
