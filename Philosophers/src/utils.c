@@ -46,7 +46,7 @@ long get_current_time_ms(void)
 void print_step(t_philo *philo, char *color, char *step)
 {
 	pthread_mutex_lock(philo->print_mutex);
-	printf("%ld", get_current_time_ms() - philo->start_time);
+	printf("%s%ld%s", PURPLE, get_current_time_ms() - philo->start_time, RESET);
 	printf(" %d", philo->id);
 	printf(" %s%s%s\n", color, step, RESET);
 	pthread_mutex_unlock(philo->print_mutex);

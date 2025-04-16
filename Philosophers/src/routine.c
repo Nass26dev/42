@@ -45,7 +45,7 @@ void *monitor_routine(void *arg)
 			{
 				pthread_mutex_unlock(philos->meal_mutex);
 				pthread_mutex_lock(philos[i].print_mutex);
-				printf("%ld", get_current_time_ms() - philos[i].start_time);
+				printf("%s%ld%s", PURPLE, get_current_time_ms() - philos[i].start_time, RESET);
 				printf(" %d %s%s%s\n", philos[i].id, RED, "is dead", RESET);
 				return (NULL);
 			}
@@ -66,12 +66,12 @@ void philo_routine(t_philo *philo)
 			pthread_mutex_lock(philo->left_fork);
 		else
 			pthread_mutex_lock(philo->right_fork);
-		print_step(philo, BLUE, "has taken a fork");
+		print_step(philo, YELLOW, "has taken a fork");
 		if (philo->id != 1)
 			pthread_mutex_lock(philo->right_fork);
 		else
 			pthread_mutex_lock(philo->left_fork);
-		print_step(philo, BLUE, "has taken a fork");
+		print_step(philo, ORANGE, "has taken a fork");
 		pthread_mutex_lock(philo->meal_mutex);
 		print_step(philo, GREEN, "is eating");
 		philo->last_meal = get_current_time_ms();
@@ -80,9 +80,9 @@ void philo_routine(t_philo *philo)
 		usleep(philo->t_eat * 1000);
 		pthread_mutex_unlock(philo->left_fork);
 		pthread_mutex_unlock(philo->right_fork);
-		print_step(philo, GREEN, "is sleeping");
+		print_step(philo, BLUE, "is sleeping");
 		usleep(philo->t_sleep * 1000);
-		print_step(philo, GREEN, "is thinking");
+		print_step(philo, CYAN, "is thinking");
 	}
 }
 

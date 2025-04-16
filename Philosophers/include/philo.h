@@ -24,7 +24,11 @@
 # define RESET   	"\033[0m"
 # define RED     	"\033[31m"
 # define GREEN   	"\033[32m"
+# define YELLOW		"\033[0;33m"
+# define ORANGE		"\033[38;5;208m"
+# define CYAN		"\033[0;36m"
 # define BLUE		"\033[0;34m"
+# define PURPLE		"\033[0;35m"
 # define t_mutex pthread_mutex_t
 # define MAX_PHILOS 200
 
