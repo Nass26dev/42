@@ -51,3 +51,12 @@ void print_step(t_philo *philo, char *color, char *step)
 	printf(" %s%s%s\n", color, step, RESET);
 	pthread_mutex_unlock(philo->print_mutex);
 }
+
+void usleep_loop(long time_to_sleep)
+{
+	long start_time;
+
+	start_time = get_current_time_ms();
+	while (get_current_time_ms() - start_time < time_to_sleep)
+		usleep(10);
+}

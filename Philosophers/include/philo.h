@@ -70,6 +70,7 @@ void print_error(char *error_msg, int message_length);
 void free_ressources(t_table table, int nb, int exit_code, int step);
 long get_current_time_ms(void);
 void print_step(t_philo *philo, char *color, char *step);
+void usleep_loop(long time_to_sleep);
 // create.c
 void create_mutexes(t_table *table);
 void create_philos(t_table *table, int argc, char **argv);

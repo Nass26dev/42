@@ -62,26 +62,26 @@ void philo_routine(t_philo *philo)
 {
 	while (1)
 	{
-		if (philo->id != 1)
+		// if (philo->id != 1)
 			pthread_mutex_lock(philo->left_fork);
-		else
-			pthread_mutex_lock(philo->right_fork);
+		// else
+			// pthread_mutex_lock(philo->right_fork);
 		print_step(philo, YELLOW, "has taken a fork");
-		if (philo->id != 1)
+		// if (philo->id != 1)
 			pthread_mutex_lock(philo->right_fork);
-		else
-			pthread_mutex_lock(philo->left_fork);
+		// else
+			// pthread_mutex_lock(philo->left_fork);
 		print_step(philo, ORANGE, "has taken a fork");
 		pthread_mutex_lock(philo->meal_mutex);
 		print_step(philo, GREEN, "is eating");
 		philo->last_meal = get_current_time_ms();
 		philo->meals_eaten++;
 		pthread_mutex_unlock(philo->meal_mutex);
-		usleep(philo->t_eat * 1000);
-		pthread_mutex_unlock(philo->left_fork);
+		usleep_loop(philo->t_eat);
 		pthread_mutex_unlock(philo->right_fork);
+		pthread_mutex_unlock(philo->left_fork);
 		print_step(philo, BLUE, "is sleeping");
-		usleep(philo->t_sleep * 1000);
+		usleep_loop(philo->t_sleep);
 		print_step(philo, CYAN, "is thinking");
 	}
 }
@@ -91,6 +91,8 @@ void *launch_philo_routine(void *arg)
 	t_philo *philo;
 
 	philo = (t_philo *)arg;
+	if (philo->id % 2 != 0)
+		usleep(500);
 	pthread_mutex_lock(philo->meal_mutex);
 	philo->start_time = get_current_time_ms();
 	philo->last_meal = get_current_time_ms();
