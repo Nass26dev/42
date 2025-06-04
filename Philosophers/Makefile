@@ -1,9 +1,24 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2025/06/04 09:52:11 by nyousfi           #+#    #+#              #
+#    Updated: 2025/06/04 15:04:26 by nyousfi          ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 NAME = philo
 
 CC = cc
 CFLAGS = -Wall -Werror -Wextra -MMD -MP
 SRCS = src/main.c \
 		src/create.c \
+		src/error.c \
+		src/error_utils.c \
+		src/routine_utils.c \
 		src/routine.c \
 		src/utils.c
 

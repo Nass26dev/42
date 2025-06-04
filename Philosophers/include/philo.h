@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/09 10:51:28 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/03 08:28:34 by nyousfi          ###   ########.fr       */
+/*   Created: 2025/06/04 11:02:50 by nyousfi           #+#    #+#             */
+/*   Updated: 2025/06/04 14:18:41 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,19 +65,29 @@ typedef struct s_table
 	int			nb_philos;
 }				t_table;
 
-// utils.c
-void			print_error(char *error_msg, int message_length);
-void			free_ressources(t_table table, int nb, int exit_code, int step);
-long			get_current_time_ms(void);
-void			print_step(t_philo *philo, char *color, char *step);
-void			usleep_loop(long time_to_sleep);
 // create.c
-void			create_mutexes(t_table *table);
+bool			check_args(int argc, char **argv, t_table *table);
+bool			create_mutexes(t_table *table);
 void			create_philos(t_table *table, int argc, char **argv);
-// create_utils.c
-void			check_args(int argc, char **argv, t_table *table);
-long long		ft_atoll(const char *str);
-// routine.c
-void			launch_routines(t_table *table);
+// error.c
+bool			error_args_case(int error_step);
+bool			error_forks_case(t_table *table, int nb_forks);
+bool			error_print_mutex_case(t_table *table, int nb_forks);
+bool			error_meal_mutex_case(t_table *table, int nb_forks);
+// error_utils.c
+bool			error_monitor_case(t_table *table, int nb_philos);
+bool			error_philo_case(t_table *table, int nb, t_threads *threads,
+					int nb_thr);
 
+// routine.c
+bool			launch_routine(t_table *table);
+// routine_utils.c
+void			usleep_loop(long time_to_sleep);
+void			print_step(t_philo *philo, char *color, char *step);
+void	stop_routine(t_philo *philo);
+bool			check_routine_stop(t_philo *philo);
+bool			check_if_is_one(t_philo *philo);
+// utils.c
+long			get_current_time_ms(void);
+void			free_ressources(t_table *table);
 #endif

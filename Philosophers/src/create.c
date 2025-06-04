@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/09 11:21:11 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/04 09:56:27 by nyousfi          ###   ########.fr       */
+/*   Created: 2025/06/04 09:55:50 by nyousfi           #+#    #+#             */
+/*   Updated: 2025/06/04 15:20:36 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,27 +39,28 @@ long long	ft_atoll(const char *str)
 	return (nb * sign);
 }
 
-void	check_args(int argc, char **argv, t_table *table)
+bool	check_args(int argc, char **argv, t_table *table)
 {
 	if (argc != 5 && argc != 6)
-		print_error("invalid number of arguments\n", 28);
-	if (ft_atoll(argv[1]) > MAX_PHILOS)
-		print_error("nb of philos is > MAX_PHILOS\n", 27);
+		return (error_args_case(1));
+	if (ft_atoll(argv[1]) > MAX_PHILOS || ft_atoll(argv[1]) <= 0)
+		return (error_args_case(2));
 	table->nb_philos = ft_atoll(argv[1]);
-	if (ft_atoll(argv[2]) > LONG_MAX)
-		print_error("time to die is > LONG_MAX\n", 26);
-	if (ft_atoll(argv[3]) > LONG_MAX)
-		print_error("time to eat is > LONG_MAX\n", 26);
-	if (ft_atoll(argv[4]) > LONG_MAX)
-		print_error("time to sleep is > LONG_MAX\n", 28);
+	if (ft_atoll(argv[2]) > LONG_MAX || ft_atoll(argv[2]) <= 0)
+		return (error_args_case(3));
+	if (ft_atoll(argv[3]) > LONG_MAX || ft_atoll(argv[3]) <= 0)
+		return (error_args_case(4));
+	if (ft_atoll(argv[4]) > LONG_MAX || ft_atoll(argv[4]) <= 0)
+		return (error_args_case(5));
 	if (argc == 6)
 	{
-		if (ft_atoll(argv[5]) > LONG_MAX)
-			print_error("meals to reach is > LONG_MAX\n", 29);
+		if (ft_atoll(argv[5]) > LONG_MAX || ft_atoll(argv[5]) <= 0)
+			return (error_args_case(6));
 	}
+	return (false);
 }
 
-void	create_mutexes(t_table *table)
+bool	create_mutexes(t_table *table)
 {
 	int	i;
 
@@ -67,19 +68,14 @@ void	create_mutexes(t_table *table)
 	while (i < table->nb_philos)
 	{
 		if (pthread_mutex_init(&table->forks[i], NULL))
-			free_ressources(*table, i, EXIT_FAILURE, 1);
+			return (error_forks_case(table, i));
 		i++;
 	}
 	if (pthread_mutex_init(&table->print_mutex, NULL))
-	{
-		write(STDERR_FILENO, "mutex init error for print_mutex\n", 33);
-		free_ressources(*table, table->nb_philos, EXIT_FAILURE, 2);
-	}
+		return (error_print_mutex_case(table, table->nb_philos));
 	if (pthread_mutex_init(&table->meal_mutex, NULL))
-	{
-		write(STDERR_FILENO, "mutex init error for meal_mutex\n", 32);
-		free_ressources(*table, table->nb_philos, EXIT_FAILURE, 3);
-	}
+		return (error_meal_mutex_case(table, table->nb_philos));
+	return (false);
 }
 
 void	create_philos(t_table *table, int argc, char **argv)
@@ -94,7 +90,7 @@ void	create_philos(t_table *table, int argc, char **argv)
 		table->philos[i].t_eat = ft_atoll(argv[3]);
 		table->philos[i].t_sleep = ft_atoll(argv[4]);
 		table->philos[i].start_time = get_current_time_ms();
-		table->philos[i].last_meal = get_current_time_ms();
+		table->philos[i].last_meal = table->philos[i].start_time;
 		if (argc == 6)
 			table->philos[i].meal_reach = ft_atoll(argv[5]);
 		else

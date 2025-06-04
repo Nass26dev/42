@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/09 10:51:08 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/06/03 08:26:25 by nyousfi          ###   ########.fr       */
+/*   Created: 2025/06/04 09:53:09 by nyousfi           #+#    #+#             */
+/*   Updated: 2025/06/04 14:42:25 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,14 @@ int	main(int argc, char **argv)
 {
 	t_table	table;
 
-	check_args(argc, argv, &table);
-	create_mutexes(&table);
+	if (check_args(argc, argv, &table))
+		return (1);
+		// call getimeofday
+	if (create_mutexes(&table))
+		return (1);
 	create_philos(&table, argc, argv);
-	launch_routines(&table);
-	free_ressources(table, table.nb_philos, EXIT_SUCCESS, 3);
+	if (launch_routine(&table))
+		return (1);
+	free_ressources(&table);
 	return (0);
 }
