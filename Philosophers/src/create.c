@@ -6,7 +6,7 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 11:21:11 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/04/09 14:05:06 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/06/04 09:56:27 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ long long	ft_atoll(const char *str)
 	return (nb * sign);
 }
 
-void check_args(int argc, char **argv, t_table *table)
+void	check_args(int argc, char **argv, t_table *table)
 {
 	if (argc != 5 && argc != 6)
 		print_error("invalid number of arguments\n", 28);
@@ -59,9 +59,9 @@ void check_args(int argc, char **argv, t_table *table)
 	}
 }
 
-void create_mutexes(t_table *table)
+void	create_mutexes(t_table *table)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < table->nb_philos)
@@ -82,9 +82,9 @@ void create_mutexes(t_table *table)
 	}
 }
 
-void create_philos(t_table *table, int argc, char **argv)
+void	create_philos(t_table *table, int argc, char **argv)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < table->nb_philos)
@@ -107,5 +107,4 @@ void create_philos(t_table *table, int argc, char **argv)
 		table->philos[i].meal_mutex = &table->meal_mutex;
 		i++;
 	}
-	
 }
