@@ -6,7 +6,7 @@
 #    By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/29 09:10:21 by nyousfi           #+#    #+#              #
-#    Updated: 2025/07/29 10:52:10 by nyousfi          ###   ########.fr        #
+#    Updated: 2025/09/09 18:56:21 by nyousfi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,8 @@ CFLAGS = -Wall -Werror -Wextra -std=c++98 -MMD -MP
 
 SRCS = src/main.cpp \
 		src/contact.cpp \
-		src/phoneBook.cpp
+		src/phoneBook.cpp \
+		src/prompt.cpp \
 
 MAKEDIR = make
 OBJDIR = make/objs
@@ -27,7 +28,7 @@ OBJS = $(SRCS:src/%.cpp=$(OBJDIR)/%.o)
 DEPS = $(SRCS:src/%.cpp=$(DEPDIR)/%.d)
 
 HEADER = include/contact.hpp \
-			include/phoneBook.hpp
+			include/phoneBook.hpp \
 
 COMPILED = 0
 MESSAGE_COLOR_GREEN = \033[1;32m

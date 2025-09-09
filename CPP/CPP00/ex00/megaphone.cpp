@@ -6,7 +6,7 @@
 /*   By: nyousfi <nyousfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/29 09:20:17 by nyousfi           #+#    #+#             */
-/*   Updated: 2025/07/29 10:00:40 by nyousfi          ###   ########.fr       */
+/*   Updated: 2025/09/09 10:44:09 by nyousfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,6 @@ int main(int argc, char **argv)
             arg[j] = std::toupper(arg[j]);
         
         std::cout << arg;
-        
-        if (i < argc - 1)
-            std::cout << " ";
     }
     
     std::cout << std::endl;
