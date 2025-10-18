@@ -19,6 +19,10 @@ void Harl::error(void) {
 void Harl::complain(std::string level) {
     std::map<std::string, void(Harl::*)()> table;
 
+    if (level != "DEBUG" && level != "INFO" && level != "WARNING" && level != "ERROR") {
+        std::cout << "wrong level !" << std::endl;
+        return ;
+    }
     table["DEBUG"] = &Harl::debug;
     table["INFO"] = &Harl::info;
     table["WARNING"] = &Harl::warning;
