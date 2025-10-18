@@ -1,6 +1,7 @@
 #include "../include/Harl.hpp"
 
 void Harl::debug(void) {
+    
     std::cout << DEBUG_MESSAGE << std::endl;
 }
 

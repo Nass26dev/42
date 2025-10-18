@@ -1,19 +1,19 @@
 #include "../include/Harl.hpp"
 
 void Harl::debug(void) {
-    std::cout << DEBUG_MESSAGE << std::endl;
+    std::cout << "[ DEBUG ]" << std::endl << DEBUG_MESSAGE << std::endl;
 }
 
 void Harl::info(void) {
-    std::cout << INFO_MESSAGE << std::endl;
+    std::cout << "[ INFO ]" << std::endl << INFO_MESSAGE << std::endl;
 }
 
 void Harl::warning(void) {
-    std::cout << WARNING_MESSAGE << std::endl;
+    std::cout << "[ WARNING ]" << std::endl << WARNING_MESSAGE << std::endl;
 }
 
 void Harl::error(void) {
-    std::cout << ERROR_MESSAGE << std::endl;
+    std::cout << "[ ERROR ]" << std::endl << ERROR_MESSAGE << std::endl;
 }
 
 int getLevelIndex(const std::string& level) {
