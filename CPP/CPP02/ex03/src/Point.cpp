@@ -20,3 +20,9 @@ Fixed Point::get_x() const {
 Fixed Point::get_y() const {
     return _y;
 }
+
+std::ostream& operator<<(std::ostream& os, const Point& point)
+{
+    os << "(" << point.get_x().toFloat() << ", " << point.get_y().toFloat() << ")";
+    return os;
+}
