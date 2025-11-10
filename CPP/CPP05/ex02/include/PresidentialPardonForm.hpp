@@ -13,6 +13,7 @@ public:
     ~PresidentialPardonForm();
 
     void beSigned(Bureaucrat &b) override;
+    void execute(Bureaucrat const &executor) const override; //TODO
 };
 
 #endif

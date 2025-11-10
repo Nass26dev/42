@@ -22,7 +22,7 @@ public:
 	int getGradeS() const;
 	int getGradeE() const;
 	void setSign();
-	virtual void execute(Bureaucrat const &executor) = 0;
+	virtual void execute(Bureaucrat const &executor) const = 0;
 	virtual void beSigned(Bureaucrat &b) = 0;
 };
 
