@@ -4,11 +4,12 @@ CC = c++
 CFLAGS = -Wall -Werror -Wextra -std=c++98 -MMD -MP
 
 SRCS = src/main.cpp \
-		src/Animal.cpp \
+		src/AAnimal.cpp \
 		src/Cat.cpp \
 		src/Dog.cpp \
 		src/WrongCat.cpp \
-		src/WrongAnimal.cpp
+		src/WrongAnimal.cpp \
+		src/Brain.cpp
 
 MAKEDIR = make
 OBJDIR = make/objs
@@ -17,11 +18,12 @@ DEPDIR = make/deps
 OBJS = $(SRCS:src/%.cpp=$(OBJDIR)/%.o)
 DEPS = $(SRCS:src/%.cpp=$(DEPDIR)/%.d)
 
-HEADER = include/Animal.hpp \
+HEADER = include/AAnimal.hpp \
 			include/Cat.hpp \
 			include/Dog.hpp \
 			include/WrongCat.hpp \
-			include/WrongAnimal.hpp
+			include/WrongAnimal.hpp \
+			include/Brain.hpp
 
 COMPILED = 0
 MESSAGE_COLOR_GREEN = \033[1;32m

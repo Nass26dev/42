@@ -8,7 +8,8 @@ SRCS = src/main.cpp \
 		src/Cat.cpp \
 		src/Dog.cpp \
 		src/WrongCat.cpp \
-		src/WrongAnimal.cpp
+		src/WrongAnimal.cpp \
+		src/Brain.cpp
 
 MAKEDIR = make
 OBJDIR = make/objs
@@ -21,7 +22,8 @@ HEADER = include/Animal.hpp \
 			include/Cat.hpp \
 			include/Dog.hpp \
 			include/WrongCat.hpp \
-			include/WrongAnimal.hpp
+			include/WrongAnimal.hpp \
+			include/Brain.hpp
 
 COMPILED = 0
 MESSAGE_COLOR_GREEN = \033[1;32m
