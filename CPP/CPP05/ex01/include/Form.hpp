@@ -4,26 +4,34 @@
 #include <iostream>
 #include <string>
 
-class Bureaucrat;
-
 class Form {
-private:
-	const std::string _name;
-	bool _sign;
-	const int _grade_s;
-	const int _grade_e;
-public:
-	Form(std::string name, int grade_s, int grade_e);
-	~Form();
-	void GradeTooHighException() const;
-	void GradeTooLowException() const;
-	std::string getName() const;
-	bool getSign() const;
-	int getGradeS() const;
-	int getGradeE() const;
-	void beSigned(Bureaucrat &b);
+    private:
+        const std::string _name;
+        bool _is_signed;
+        const int _grade_to_sign;
+        const int _grade_to_execute;
+    public :
+        Form();
+        Form(const std::string name, const int grade_sign, const int grade_execute);
+        Form(const Form& other);
+
+        ~Form();
+
+        const std::string& getName() const;
+        bool getIsSigned() const;
+        const int getGradeToSign() const;
+        const int getGradeToExecute() const;
+
+        class GradeTooHighException : public std::exception {
+            public:
+                virtual const char *what() const throw();
+        };
+        class GradeTooLowException : public std::exception {
+            public:
+                virtual const char *what() const throw();
+        };
 };
 
-std::ostream& operator<<(std::ostream& out, Form &fo);
+std::ostream& operator<<(std::ostream& os, const Form& b);
 
 #endif

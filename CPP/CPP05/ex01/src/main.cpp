@@ -1,78 +1,57 @@
-#include "../include/Bureaucrat.hpp"
+#include "Bureaucrat.hpp"
 
 int main() {
-    try
-    {
-        Form contract("test", 151, 20);
-        std::cout << contract << std::endl;
+    Bureaucrat a;
+    Bureaucrat b("Bob", 1);
+    Bureaucrat c(a);
+    Bureaucrat d("Bobby", 23);
+    d = b;
+
+    std::cout << a << std::endl;
+    std::cout << b << std::endl;    
+    std::cout << c << std::endl;
+    std::cout << d << std::endl;
+    
+    std::cout << std::endl;
+
+    try {
+        a.incrementGrade();
+        std::cout << a << std::endl;
+        a.decrementGrade();
+        std::cout << a << std::endl;
+        a.decrementGrade();
+        std::cout << a << std::endl;
     }
-    catch(const std::exception& e)
-    {
-         std::cerr << "catch : " << e.what() << '\n';
+    catch (Bureaucrat::GradeTooLowException& e) {
+        std::cerr << e.what() << std::endl;
+    }
+
+    std::cout << std::endl;
+    
+    try {
+        b.incrementGrade();
+        std::cout << a << std::endl;
+    }
+    catch (Bureaucrat::GradeTooHighException& e) {
+        std::cerr << e.what() << std::endl;
     }
 
     std::cout << std::endl;
 
-    try
-    {
-        Form contract("test", 0, 20);
-        std::cout << contract << std::endl;
+    try {
+        Bureaucrat("Bob", 0);
     }
-    catch(const std::exception& e)
-    {
-        std::cerr << "catch : " << e.what() << '\n';
+    catch (Bureaucrat::GradeTooHighException& e) {
+        std::cerr << e.what() << std::endl;
     }
 
     std::cout << std::endl;
 
-    try
-    {
-        Form contract("test", 80, 151);
-        std::cout << contract << std::endl;
+    try {
+        Bureaucrat("Bob", 151);
     }
-    catch(const std::exception& e)
-    {
-        std::cerr << "catch : " << e.what() << '\n';
-    }
-
-    std::cout << std::endl;
-
-    try
-    {
-        Form contract("test", 80, 0);
-        std::cout << contract << std::endl;
-    }
-    catch(const std::exception& e)
-    {
-        std::cerr << "catch : " << e.what() << '\n';
-    }
-
-    std::cout << std::endl;
-
-    try
-    {
-        Bureaucrat b("Bob", 1);
-        Form c("test", 20, 20);
-        std::cout << c << std::endl;
-        b.signForm(c);
-    }
-    catch(const std::exception& e)
-    {
-        std::cerr << "catch : " << e.what() << '\n';
-    }
-
-    std::cout << std::endl;
-
-    try
-    {
-        Bureaucrat b("Bob", 150);
-        Form c("test", 20, 20);
-        std::cout << c << std::endl;
-        b.signForm(c);
-    }
-    catch(const std::exception& e)
-    {
-        std::cerr << "catch : " << e.what() << '\n';
+    catch (Bureaucrat::GradeTooLowException& e) {
+        std::cerr << e.what() << std::endl;
     }
 
     return 0;

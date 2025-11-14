@@ -4,10 +4,14 @@
 #include "Animal.hpp"
 
 class Cat : public Animal {
-public:
-    Cat();
-    virtual ~Cat();
-    void makeSound() const;
+    public:
+        Cat();
+        Cat(const Cat& other);
+        Cat& operator=(const Cat& Animal);
+
+        ~Cat();
+
+        void makeSound() const;
 };
 
 #endif

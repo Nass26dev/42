@@ -1,56 +1,16 @@
 #include "Form.hpp"
-#include "Bureaucrat.hpp"
 
-Form::Form(std::string name, int grade_s, int grade_e) : _name(name), _sign(false), _grade_s(grade_s), _grade_e(grade_e) {
-    if (grade_s > 150 || grade_e > 150)
-        GradeTooHighException();
-    if (grade_s < 1 || grade_e < 1)
-        GradeTooLowException();
-    std::cout << "Form constructor called" << std::endl;
+Form::Form() : _name("Default Form"), _is_signed(false), _grade_to_sign(150), _grade_to_execute(150) {}
+
+Form::Form(const std::string name, const int grade_sign, const int grade_execute) : _name(name), _is_signed(false), _grade_to_sign(grade_sign), _grade_to_execute(grade_execute) {
+    if (grade_sign < 1 || grade_execute < 1) {
+        throw Form::GradeTooHighException();
+    }
+    if (grade_sign > 150 || grade_execute > 150) {
+        throw Form::GradeTooLowException();
+    }
 }
 
-Form::~Form() {
-    std::cout << "Form destructor called" << std::endl;
-}
-
-void Form::GradeTooHighException() const {
-    throw std::runtime_error("Grade is too High");
-}
-
-void Form::GradeTooLowException() const {
-    throw std::runtime_error("Grade is too Low");
-}
-
-void Form::beSigned(Bureaucrat &b) {
-    int temp = b.getGrade();
-
-    if (temp > 150)
-        GradeTooHighException();
-    if (temp < 1)
-        GradeTooLowException();
-    if (temp <= _grade_s)
-        _sign = true;
-    else
-        GradeTooLowException();
-}
-
-std::string Form::getName() const {
-    return (_name);
-}
-
-bool Form::getSign() const {
-    return (_sign);
-}
-
-int Form::getGradeS() const {
-    return (_grade_s);
-}
-
-int Form::getGradeE() const {
-    return (_grade_e);
-}
-
-std::ostream& operator<<(std::ostream& out, Form &fo) {
-    out << std::boolalpha << "name : " << fo.getName() << ", sign : " << fo.getSign() << ", grade to sign : " << fo.getGradeS() << ", grade to execute : " << fo.getGradeE();
-    return out;
+Form::Form(const Form& other) : _name(other.getName()), _is_signed(false), _grade_to_sign(other.getGradeToSign()), _grade_to_execute(other.getGradeToExecute()) {
+    
 }

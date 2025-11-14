@@ -1,11 +1,10 @@
-NAME = Form
+NAME = Bureaucrat
 
 CC = c++
 CFLAGS = -Wall -Werror -Wextra -std=c++98 -MMD -MP
 
 SRCS = src/main.cpp \
-		src/Bureaucrat.cpp \
-		src/Form.cpp
+		src/Bureaucrat.cpp
 
 MAKEDIR = make
 OBJDIR = make/objs
@@ -15,7 +14,6 @@ OBJS = $(SRCS:src/%.cpp=$(OBJDIR)/%.o)
 DEPS = $(SRCS:src/%.cpp=$(DEPDIR)/%.d)
 
 HEADER = include/Bureaucrat.hpp \
-			include/Form.hpp
 
 COMPILED = 0
 MESSAGE_COLOR_GREEN = \033[1;32m

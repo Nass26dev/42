@@ -1,65 +1,57 @@
 #include "Bureaucrat.hpp"
 
 int main() {
+    Bureaucrat a;
+    Bureaucrat b("Bob", 1);
+    Bureaucrat c(a);
+    Bureaucrat d("Bobby", 23);
+    d = b;
+
+    std::cout << a << std::endl;
+    std::cout << b << std::endl;    
+    std::cout << c << std::endl;
+    std::cout << d << std::endl;
+    
+    std::cout << std::endl;
+
     try {
-        Bureaucrat Josianne("Josianne", 151);
-        std::cout << Josianne << std::endl;
+        a.incrementGrade();
+        std::cout << a << std::endl;
+        a.decrementGrade();
+        std::cout << a << std::endl;
+        a.decrementGrade();
+        std::cout << a << std::endl;
     }
-    catch (std::exception &e) {
-        std::cerr << "catch : " << e.what() << std::endl;
+    catch (Bureaucrat::GradeTooLowException& e) {
+        std::cerr << e.what() << std::endl;
+    }
+
+    std::cout << std::endl;
+    
+    try {
+        b.incrementGrade();
+        std::cout << a << std::endl;
+    }
+    catch (Bureaucrat::GradeTooHighException& e) {
+        std::cerr << e.what() << std::endl;
     }
 
     std::cout << std::endl;
 
     try {
-        Bureaucrat Jacquie("Jaquie", 0);
-        std::cout << Jacquie << std::endl;
+        Bureaucrat("Bob", 0);
     }
-    catch (std::exception &e) {
-        std::cerr << "catch : " << e.what() << std::endl;
-    }
-
-    std::cout << std::endl;
-
-    try {
-        Bureaucrat Bob("Bob", 150);
-        std::cout << Bob << std::endl;
-
-    }
-    catch (std::exception &e) {
-        std::cerr << "catch : " << e.what() << std::endl;
+    catch (Bureaucrat::GradeTooHighException& e) {
+        std::cerr << e.what() << std::endl;
     }
 
     std::cout << std::endl;
 
     try {
-        Bureaucrat Bob2("Bob2", 1);
-        std::cout << Bob2 << std::endl;
+        Bureaucrat("Bob", 151);
     }
-    catch (std::exception &e) {
-        std::cerr << "catch : " << e.what() << std::endl;
-    }
-
-    std::cout << std::endl;
-
-    try {
-        Bureaucrat Bob3("Bob3", 1);
-        std::cout << Bob3 << std::endl;
-        Bob3.decrementGrade();
-    }
-    catch (std::exception &e) {
-        std::cerr << "catch : " << e.what() << std::endl;
-    }
-
-    std::cout << std::endl;
-
-    try {
-        Bureaucrat Bob4("Bob4", 150);
-        std::cout << Bob4 << std::endl;
-        Bob4.incrementGrade();
-    }
-    catch (std::exception &e) {
-        std::cerr << "catch : " << e.what() << std::endl;
+    catch (Bureaucrat::GradeTooLowException& e) {
+        std::cerr << e.what() << std::endl;
     }
 
     return 0;
