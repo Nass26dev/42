@@ -7,7 +7,7 @@
 int main()
 {
     AAnimal* animals[6];
-    
+
     for (size_t i = 0; i < 3; i++) {
         std::cout << i << " : ";
         animals[i] = new Dog();
