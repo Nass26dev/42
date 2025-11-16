@@ -5,7 +5,11 @@ CFLAGS = -Wall -Werror -Wextra -std=c++98 -MMD -MP
 
 SRCS = src/main.cpp \
 		src/Bureaucrat.cpp \
-		src/Form.cpp
+		src/AForm.cpp \
+		src/PresidentialPardonForm.cpp \
+		src/RobotomyRequestForm.cpp \
+		src/ShrubberyCreationForm.cpp \
+		src/Intern.cpp
 
 MAKEDIR = make
 OBJDIR = make/objs
@@ -15,7 +19,11 @@ OBJS = $(SRCS:src/%.cpp=$(OBJDIR)/%.o)
 DEPS = $(SRCS:src/%.cpp=$(DEPDIR)/%.d)
 
 HEADER = include/Bureaucrat.hpp \
-			include/Form.hpp
+			include/AForm.hpp \
+			include/PresidentialPardonForm.hpp \
+			include/RobotomyRequestForm.hpp \
+			include/ShrubberyCreationForm.hpp \
+			include/Intern.hpp
 
 COMPILED = 0
 MESSAGE_COLOR_GREEN = \033[1;32m

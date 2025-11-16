@@ -1,8 +1,9 @@
-#include "Bureaucrat.hpp"
+#include "../include/Bureaucrat.hpp"
+#include "AForm.hpp"
 
 Bureaucrat::Bureaucrat() : _name("DefaultBureaucrat"), _grade(150) {}
 
-Bureaucrat::Bureaucrat(const std::string& name, const int grade) : _name(name) {
+Bureaucrat::Bureaucrat(const std::string& name, int grade) : _name(name) {
     if (grade < 1)
         throw GradeTooHighException();
     if (grade > 150)
@@ -42,4 +43,30 @@ const char *Bureaucrat::GradeTooLowException::what() const throw() {return "Bure
 std::ostream& operator<<(std::ostream& os, const Bureaucrat& b) {
     os << b.getName() << ", bureaucrat grade " << b.getGrade();
     return os;
+}
+
+void Bureaucrat::signForm(AForm& f) {
+    try {
+        f.beSigned(*this);
+        std::cout << _name << " signed " << f.getName() << std::endl;
+    }
+    catch(AForm::GradeTooLowException& e) {
+        std::cerr << _name << " couldn't sign " << f.getName() << " because " << e.what() << std::endl;
+    }
+}
+
+void Bureaucrat::executeForm(const AForm& form) const {
+    try {
+        form.execute(*this);
+        std::cout << _name << " executed " << form.getName() << std::endl;
+    }
+    catch (AForm::GradeTooLowException& e) {
+        std::cerr << _name << " can't execute " << form.getName() << " because " << e.what() << std::endl;
+    }
+    catch (AForm::OpeningFileException& e) {
+        std::cerr << _name << " can't execute " << form.getName() << " because " << e.what() << std::endl;
+    }
+    catch (AForm::FormUnsignedException& e) {
+        std::cerr << _name << " can't execute " << form.getName() << " because " << e.what() << std::endl;
+    }
 }

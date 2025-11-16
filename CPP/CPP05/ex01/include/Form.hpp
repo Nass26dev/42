@@ -3,6 +3,9 @@
 
 #include <iostream>
 #include <string>
+#include <exception>
+
+class Bureaucrat;
 
 class Form {
     private:
@@ -12,15 +15,19 @@ class Form {
         const int _grade_to_execute;
     public :
         Form();
-        Form(const std::string name, const int grade_sign, const int grade_execute);
+        Form(const std::string& name, int grade_sign, int grade_execute);
         Form(const Form& other);
 
-        ~Form();
+        Form& operator=(const Form& other);
+
+        virtual ~Form();
 
         const std::string& getName() const;
         bool getIsSigned() const;
-        const int getGradeToSign() const;
-        const int getGradeToExecute() const;
+        int getGradeToSign() const;
+        int getGradeToExecute() const;
+
+        void beSigned(const Bureaucrat& b);
 
         class GradeTooHighException : public std::exception {
             public:
@@ -32,6 +39,6 @@ class Form {
         };
 };
 
-std::ostream& operator<<(std::ostream& os, const Form& b);
+std::ostream& operator<<(std::ostream& os, const Form& f);
 
 #endif
