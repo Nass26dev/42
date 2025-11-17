@@ -77,18 +77,7 @@ void ScalarConverter::manageFloat(const std::string& input) {
 void ScalarConverter::manageDouble(const std::string& input) {
     double d = std::strtod(input.c_str(), NULL);
 
-    if (d >= std::numeric_limits<char>::min() && d <= std::numeric_limits<char>::max()) {
-        char c = static_cast<char>(d);
-        if (isprint(c)) {
-            std::cout << "char: '" << c << "'" << std::endl;
-        }
-        else {
-            std::cout << "char: non displayable" << std::endl;
-        }
-    }
-    else {
-        std::cout << "char: impossible" << std::endl;
-    }
+    std::cout << "char: impossible" << std::endl;
     if (d >= std::numeric_limits<int>::min() && d <= std::numeric_limits<int>::max()) {
         std::cout << "int: " << static_cast<int>(d) << std::endl;
     }
