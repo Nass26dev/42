@@ -24,16 +24,9 @@ void ScalarConverter::manageChar(const std::string& input) {
     else {
         std::cout << "char: non displayable" << std::endl;
     }
-    if (isdigit(c)) {
-        std::cout << "int: " << static_cast<int>(c) - '0' << std::endl;
-        std::cout << "float: " << static_cast<float>(c) - '0' << "f" << std::endl;
-        std::cout << "double: " << static_cast<double>(c) - '0' << std::endl;
-    }
-    else {
-        std::cout << "int: " << static_cast<int>(c) << std::endl;
-        std::cout << "float: " << static_cast<float>(c) << "f" << std::endl;
-        std::cout << "double: " << static_cast<double>(c) << std::endl;
-    }
+    std::cout << "int: " << static_cast<int>(c) << std::endl;
+    std::cout << "float: " << static_cast<float>(c) << "f" << std::endl;
+    std::cout << "double: " << static_cast<double>(c) << std::endl;
 }
 
 void ScalarConverter::manageInt(const std::string& input) {
@@ -87,7 +80,7 @@ void ScalarConverter::manageDouble(const std::string& input) {
     if (d >= std::numeric_limits<char>::min() && d <= std::numeric_limits<char>::max()) {
         char c = static_cast<char>(d);
         if (isprint(c)) {
-            std::cout << "char: " << c << std::endl;
+            std::cout << "char: '" << c << "'" << std::endl;
         }
         else {
             std::cout << "char: non displayable" << std::endl;
@@ -96,7 +89,7 @@ void ScalarConverter::manageDouble(const std::string& input) {
     else {
         std::cout << "char: impossible" << std::endl;
     }
-    if (d >= std::numeric_limits<int>::min() && std::numeric_limits<int>::max()) {
+    if (d >= std::numeric_limits<int>::min() && d <= std::numeric_limits<int>::max()) {
         std::cout << "int: " << static_cast<int>(d) << std::endl;
     }
     else {
@@ -127,8 +120,8 @@ void ScalarConverter::manageSpecialCase(const std::string& input) {
     }
 }
 
-bool ScalarConverter::isChar(size_t len) {
-    if (len == 1) {
+bool ScalarConverter::isChar(const std::string& input, size_t len) {
+    if (len == 1 && !isdigit(input[0])) {
         return true;
     }
     return false;
@@ -157,6 +150,9 @@ bool ScalarConverter::isFloat(const std::string& input, size_t len) {
     if (input[len - 1] != 'f') {
         return false;
     }
+    if (len > 1 && (input[0] == '.' || (input[0] == '-' && input[1] == '.') || (input[0] == '+' && input[1] == '.'))) {
+        return false;
+    }
     int dot_count = 0;
     for (size_t i = 0; i < (len - 1); i++) {
         if (i == 0 && (input[i] == '-' || input[i] == '+')) {
@@ -180,7 +176,8 @@ bool ScalarConverter::isFloat(const std::string& input, size_t len) {
 
 bool ScalarConverter::isDouble(const std::string& input, size_t len) {
     int dot_count = 0;
-    if ((input[0] != '-' || input[0] != '+') && !isdigit(input[0])) {
+    
+    if (len > 1 && (input[0] == '.' || (input[0] == '-' && input[1] == '.') || (input[0] == '+' && input[1] == '.'))) {
         return false;
     }
     for (size_t i = 0; i < len; i++) {
@@ -221,7 +218,7 @@ void ScalarConverter::convert(const std::string& input) {
         manageSpecialCase(input);
         return ;
     }
-    else if (isChar(len)) {
+    else if (isChar(input, len)) {
         manageChar(input);
     }
     else if (isInt(input, len)) {

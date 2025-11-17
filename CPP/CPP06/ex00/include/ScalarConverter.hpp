@@ -16,7 +16,7 @@ class ScalarConverter {
         static void manageDouble(const std::string& input);
         static void manageSpecialCase(const std::string& input);
         static bool isSpecialCase(const std::string& input);
-        static bool isChar(size_t len);
+        static bool isChar(const std::string& input, size_t len);
         static bool isInt(const std::string& input, size_t len);
         static bool isFloat(const std::string& input, size_t len);
         static bool isDouble(const std::string& input, size_t len);
