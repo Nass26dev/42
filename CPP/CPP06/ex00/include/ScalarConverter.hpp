@@ -9,7 +9,9 @@ class ScalarConverter {
         ScalarConverter(const ScalarConverter& other);
         
         ScalarConverter& operator=(const ScalarConverter& other);
+        
         ~ScalarConverter();
+
         static void manageChar(const std::string& input);
         static void manageInt(const std::string& input);
         static void manageFloat(const std::string& input);
