@@ -1,8 +1,10 @@
 #ifndef DATA_HPP
 #define DATA_HPP
 
-typedef struct t_data {
+#include <string>
 
+typedef struct t_data {
+    std::string username;
 } Data;
 
 #endif
