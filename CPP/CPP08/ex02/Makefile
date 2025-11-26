@@ -4,7 +4,6 @@ CC = c++
 CFLAGS = -Wall -Werror -Wextra -std=c++98 -MMD -MP
 
 SRCS = src/main.cpp \
-		src/Span.cpp
 
 MAKEDIR = make
 OBJDIR = make/objs
@@ -13,7 +12,8 @@ DEPDIR = make/deps
 OBJS = $(SRCS:src/%.cpp=$(OBJDIR)/%.o)
 DEPS = $(SRCS:src/%.cpp=$(DEPDIR)/%.d)
 
-HEADER = include/Span.hpp
+HEADER = include/MutantStack.hpp \
+			src/MutantStack.tpp
 
 COMPILED = 0
 MESSAGE_COLOR_GREEN = \033[1;32m

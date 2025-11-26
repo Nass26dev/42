@@ -1,6 +1,8 @@
 #ifndef MUTANTSTACK_HPP
 #define MUTANTSTACK_HPP
 
+#include <stack>
+
 template <typename T>
  class MutantStack : public std::stack<T> {
     public:
@@ -16,8 +18,10 @@ template <typename T>
 
         iterator begin();
         iterator end();
-        const_iterator(begin) const;
-        const interator(end) const;
+        const_iterator begin() const;
+        const_iterator end() const;
 };
+
+#include "../src/MutantStack.tpp"
 
 #endif
