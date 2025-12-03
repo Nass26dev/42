@@ -3,9 +3,11 @@
 
 #include "Array.hpp"
 #include <exception>
+#include <cstddef>
 
 template <class T>
 Array<T>::Array() {
+    _array = NULL;
     _size = 0;
 }
 

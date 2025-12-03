@@ -16,7 +16,6 @@ void print(int n) {
     std::cout << n << " ";
 }
 
-
 int main() {
     int int_array[5] = {1,2,3,4,5};
     size_t size_t_array[5] = {1,2,3,4,5};
