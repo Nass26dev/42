@@ -5,8 +5,5 @@ int main(int argc, char **argv) {
         std::cerr << "usage : ./btc <filename>" << std::endl;
         return (1);
     }
-
-    /*...*/
-
     return 0;
 }
