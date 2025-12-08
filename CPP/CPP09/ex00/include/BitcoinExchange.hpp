@@ -3,52 +3,47 @@
 
 #include <list>
 #include <string>
-#include <exception>
-#include <stdexcept>
+
+class Error {
+    public:
+        class FileOpening : std::exception {
+            public:
+                const char *what() const throw();
+        };
+        class HeaderFormat : std::exception {
+            public:
+                const char *what() const throw();
+        };
+};
 
 class Date {
     private:
-        const int _year;
-        const int _month;
-        const int _day;
-
-        const int parseYear(const std::string& line, size_t len);
-        const int parseMonth(const std::string& line, size_t len);
-        const int parseDay(const std::string& line, size_t len);
+        int _year;
+        int _month;
+        int _day;
     public:
-        Date(const std::string& line, size_t len);
+        Date();
+        Date(int year, int month, int day);
         Date(const Date& other);
-
+        Date& operator=(const Date& other);
+        bool operator<=(const Date& other) const;
         ~Date();
 
-        const int getYear() const;
-        const int getMonth() const;
-        const int getDay() const;
-
-        class FormatError : public std::exception {
-            const char *what() const throw();  
-        };
-        class YearIsOutOfRange : public std::out_of_range {
-            public:
-                YearIsOutOfRange();
-        };
-        class MonthIsOutOfRange : public std::out_of_range {
-            public:
-                MonthIsOutOfRange();
-        };
-        class DayIsOutOfRange : public std::out_of_range {
-            public:
-                DayIsOutOfRange();
-        };
+        void setYear(int year);
+        void setMonth(int month);
+        void setDay(int day);
+        int getYear() const;
+        int getMonth() const;
+        int getDay() const;
 };
 
 typedef struct t_node {
     Date date;
-    int value;
+    double value;
 
-    t_node(Date d, int v)
+    t_node(Date d, double v)
         : date(d), value(v) {}
-} node;
+}   node;
 
 class BitcoinExchange {
     private:
@@ -56,12 +51,15 @@ class BitcoinExchange {
     public:
         BitcoinExchange();
         BitcoinExchange(const BitcoinExchange& other);
-
         BitcoinExchange& operator=(const BitcoinExchange& other);
-
         ~BitcoinExchange();
 
-        void addElementToDatabase(const Date& date, const int value);
+        void loadDatabase();
+        void addElementToDatabase(Date date, double value);
+        Date extractDate(std::string& line);
+        double extractValue(std::string& line);
+        void printDatabase() const;
+        std::list<node>& getDatabase();
 };
 
 #endif
