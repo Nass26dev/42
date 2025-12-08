@@ -180,5 +180,9 @@ int main(int argc, char **argv) {
         std::cout << e.what() << std::endl;
         return 1;
     }
+    catch (Error::HeaderFormat& e) {
+        std::cout << e.what() << std::endl;
+        return 1;
+    }
     return 0;
 }
