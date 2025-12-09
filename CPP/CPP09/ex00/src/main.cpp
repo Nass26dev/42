@@ -137,7 +137,7 @@ void convert(Date date, double value, BitcoinExchange& db) {
               << (date.getMonth() < 10 ? "0" : "") << date.getMonth() << "-"
               << (date.getDay() < 10 ? "0" : "") << date.getDay()
               << " => " << value << " = "
-              << std::fixed << std::setprecision(2)
+              << std::fixed << std::setprecision(1)
               << result
               << std::endl;
 }

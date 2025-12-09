@@ -1,3 +1,3 @@
-FROM debian:bookworm
+FROM debian:bullseye
 
 CMD sudo apt install
