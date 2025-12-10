@@ -35,12 +35,10 @@ Date& Date::operator=(const Date& other) {
 }
 
 bool Date::operator<=(const Date& other) const {
-    if (_year != other._year) {
+    if (_year != other._year)
        return _year < other._year;
-    } 
-    if (_month != other._month) {
+    if (_month != other._month)
         return _month < other._month;
-    }
     return _day <= other._day;
 }
 
@@ -78,9 +76,8 @@ BitcoinExchange::BitcoinExchange(const BitcoinExchange& other)
     : _database(other._database) {}
 
 BitcoinExchange& BitcoinExchange::operator=(const BitcoinExchange& other) {
-    if (this != &other) {
+    if (this != &other)
         _database = other._database;
-    }
     return *this;
 }
 
@@ -90,9 +87,9 @@ void BitcoinExchange::loadDatabase() {
     std::ifstream infile("data.csv");
     std::string line;
 
-    if (!infile) {
+    if (!infile)
         throw Error::FileOpening();
-    }
+
     getline(infile, line);
     while (getline(infile, line)) {
         Date date = extractDate(line);
@@ -134,9 +131,8 @@ double BitcoinExchange::extractValue(std::string& line) {
     double value = 0;
     int i = 0;
 
-    while (line[i] != ',') {
+    while (line[i] != ',')
         i++;
-    }
     i++;
     const char *p = line.c_str() + i;
     char *endPtr;

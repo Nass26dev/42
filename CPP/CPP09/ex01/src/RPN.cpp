@@ -10,25 +10,22 @@ RPN::RPN(const RPN& other) {
 }
 
 RPN& RPN::operator=(const RPN& other) {
-    if (this != &other) {
+    if (this != &other)
         this->_stack = other._stack;
-    }
     return *this;
 }
 
 RPN::~RPN() {}
 
 bool RPN::isNumber(const std::string& token) const {
-    if (token.size() == 1 && std::isdigit(token[0])) {
+    if (token.size() == 1 && std::isdigit(token[0]))
         return true;
-    }
     return false;
 }
 
 bool RPN::isOperator(const std::string& token) const {
-    if (token == "+" || token == "-" || token == "*" || token == "/") {
+    if (token == "+" || token == "-" || token == "*" || token == "/")
         return true;
-    }
     return false;
 }
 
