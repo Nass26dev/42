@@ -1,34 +1,32 @@
-#!/bin/bash
-
+#!/bin/sh
 set -e
 
 cd /var/www/html
 
-if [ ! -f wp-config.php ]; then
-    wp core download --allow-root
+echo "Waiting for MariaDB..."
+until mysqladmin ping -h"${MYSQL_HOST}" --silent; do
+    sleep 1
+done
 
-    wp config create \
-        --dbname=${MYSQL_DATABASE} \
-        --dbuser=${MYSQL_USER} \
-        --dbpass=${MYSQL_PASSWORD} \
-        --dbhost=${MYSQL_HOST} \
-        --allow-root
+if ! wp core is-installed --allow-root; then
+    echo "Installing WordPress..."
 
     wp core install \
-        --url=${DOMAIN_NAME} \
+        --url="${DOMAIN_NAME}" \
         --title="${WP_TITLE}" \
-        --admin_user=${WP_ADMIN_USER} \
-        --admin_password=${WP_ADMIN_PASSWORD} \
-        --admin_email=${WP_ADMIN_EMAIL} \
+        --admin_user="${WP_ADMIN_USER}" \
+        --admin_password="${WP_ADMIN_PASSWORD}" \
+        --admin_email="${WP_ADMIN_EMAIL}" \
         --skip-email \
         --allow-root
 
     wp user create \
-        ${WP_USER} \
-        ${WP_USER_EMAIL} \
-        --user_pass=${WP_USER_PASSWORD} \
+        "${WP_USER}" \
+        "${WP_USER_EMAIL}" \
+        --user_pass="${WP_USER_PASSWORD}" \
         --role=author \
         --allow-root
 fi
 
-exec php-fpm7.4 -F
+echo "Starting php-fpm..."
+exec php-fpm -F
