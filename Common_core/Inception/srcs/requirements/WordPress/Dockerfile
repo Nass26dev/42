@@ -12,7 +12,7 @@ RUN wget https://wordpress.org/latest.zip -O /tmp/wordpress.zip && \
     mv /tmp/wordpress/* /var/www/html/ && \
     rm -rf /tmp/wordpress /tmp/wordpress.zip
 
-COPY conf/wp-config.php /var/www/html/wp-config.php
+COPY conf/wordpress.conf /var/www/html/wp-config.php
 
 EXPOSE 9000
 

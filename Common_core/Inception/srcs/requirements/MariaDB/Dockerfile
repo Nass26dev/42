@@ -4,7 +4,7 @@ RUN apt-get update && \
     apt-get install -y mariadb-server && \
     apt-get clean
 
-COPY conf/init.sql /docker/-entrypoint-initdb.d/
+COPY conf/mariadb.conf /docker/-entrypoint-initdb.d/
 
 EXPOSE 3306
 

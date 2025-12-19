@@ -12,7 +12,7 @@ RUN openssl req -x509 -nodes -days 365 \
     -out /etc/nginx/ssl/nginx.crt \
     -subj "/C=FR/ST=Lyon/L=Paris/O=42/OU=Student/CN=nyousfi.42.fr"
 
-COPY ./conf/default.conf /etc/nginx/sites-available/default
+COPY ./conf/nginx.conf /etc/nginx/sites-available/default
 RUN ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
 
 EXPOSE 443
