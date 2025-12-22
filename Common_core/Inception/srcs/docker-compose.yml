@@ -37,7 +37,7 @@ services:
     networks:
       - inception
     ports:
-      - "8443:443"
+      - "443:443"
     restart: on-failure
 
 volumes:
