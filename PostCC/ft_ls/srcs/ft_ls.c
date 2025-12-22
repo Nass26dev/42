@@ -1,16 +1,28 @@
-#include "ft_ls.h"
+#include <stdio.h>
+#include <sys/types.h>
+#include <dirent.h>
+#include <stdbool.h>
 
-void openDirectory(char *path, DIR **dir) {
-    *dir = opendir(path);
-    if (!*dir) {
+bool ft_ls(char *path) {
+    DIR *dir;
+    struct dirent *entry;
+    char **files;
+
+    dir = opendir(path);
+    if (!dir) {
         perror("opendir");
-        exit(EXIT_FAILURE);
+        return true;
     }
-}
 
-void browseFiles(struct dirent **entry, DIR **dir) {
-    while ((*entry = readdir(*dir)) != NULL) {
-        ft_putstr((*entry)->d_name);
-        ft_putchar('\n');
+    while ((entry = readdir(dir)) != NULL) {
+        if (entry->d_name[0] == '.')
+            continue;
+        files = saveName(entry->d_name);
     }
+    sortFiles();
+    printFiles();
+
+    closedir(dir);
+
+    return false;
 }

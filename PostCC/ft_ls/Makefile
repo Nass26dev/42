@@ -4,9 +4,7 @@ CC = cc
 CFLAGS = -Wall -Werror -Wextra -MMD -MP
 
 SRCS = srcs/main.c \
-       srcs/ft_ls.c \
-       srcs/flags.c \
-	   srcs/utils.c
+		srcs/ft_ls.c
 
 MAKEDIR = .make
 OBJDIR = .make/objs
@@ -15,7 +13,7 @@ DEPDIR = .make/deps
 OBJS = $(SRCS:srcs/%.c=$(OBJDIR)/%.o)
 DEPS = $(SRCS:srcs/%.c=$(DEPDIR)/%.d)
 
-HEADER = includes/ft_ls.h
+HEADER = includes/
 
 COMPILED = 0
 MESSAGE_COLOR_GREEN = \033[1;32m
